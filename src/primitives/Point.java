@@ -62,18 +62,12 @@ public class Point {
      * @param other the other point
      * @return squared distance
      */
+    // בתוך Point.java - המימוש המדויק לפי DRY
     public double distanceSquared(Point other) {
-        double x1 = _xyz._d1();
-        double y1 = _xyz._d2();
-        double z1 = _xyz._d3();
-
-        double x2 = other._xyz._d1();
-        double y2 = other._xyz._d2();
-        double z2 = other._xyz._d3();
-
-        return (x1 - x2) * (x1 - x2) +
-                (y1 - y2) * (y1 - y2) +
-                (z1 - z2) * (z1 - z2);
+        Double3 result = _xyz.subtract(other._xyz); // שימוש ב-Double3
+        return result._d1() * result._d1() +
+                result._d2() * result._d2() +
+                result._d3() * result._d3();
     }
 
     /**

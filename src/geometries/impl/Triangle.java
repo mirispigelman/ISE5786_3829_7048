@@ -9,7 +9,7 @@ import primitives.Vector;
  *
  * @author Your Name
  */
-public class Triangle extends Polygon {
+public final class Triangle extends Polygon {
 
     /**
      * Constructor for Triangle receiving three points.
@@ -19,7 +19,7 @@ public class Triangle extends Polygon {
      * @param p2 second point
      * @param p3 third point
      */
-    public Triangle(Point p1, Point p2, Point p3) {
+    public  Triangle(Point p1, Point p2, Point p3) {
         super(p1, p2, p3);
     }
 

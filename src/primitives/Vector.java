@@ -6,12 +6,16 @@ package primitives;
  *
  * @author Your Name
  */
-public class Vector extends Point {
+public final class Vector extends Point {
     /**
      * Constant representing a unit vector on the Z axis
      */
+    /** Constant representing a unit vector on the X axis */
+    public static final Vector AXIS_X = new Vector(1, 0, 0);
+    /** Constant representing a unit vector on the Y axis */
+    public static final Vector AXIS_Y = new Vector(0, 1, 0);
+    /** Constant representing a unit vector on the Z axis */
     public static final Vector AXIS_Z = new Vector(0, 0, 1);
-
     /**
      * Constructor to initialize Vector with three double values.
      * Throws IllegalArgumentException if it's a zero vector.
