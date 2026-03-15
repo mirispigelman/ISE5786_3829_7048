@@ -6,6 +6,8 @@ import primitives.Vector;
 
 /**
  * Represents an infinite tube in 3D space.
+ * * @author Naama Shafer
+ * @author Miri Shpigelman
  */
 public class Tube extends RadialGeometry {
     protected final Ray _axis;

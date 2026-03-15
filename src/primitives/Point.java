@@ -3,7 +3,8 @@ package primitives;
 /**
  * Class Point represents a point in 3D space.
  *
- * @author Your Name
+ * @author Naama Shafer
+ * @author Miri Shpigelman
  */
 public class Point {
     /**
@@ -62,9 +63,9 @@ public class Point {
      * @param other the other point
      * @return squared distance
      */
-    // בתוך Point.java - המימוש המדויק לפי DRY
+
     public double distanceSquared(Point other) {
-        Double3 result = _xyz.subtract(other._xyz); // שימוש ב-Double3
+        Double3 result = _xyz.subtract(other._xyz);
         return result._d1() * result._d1() +
                 result._d2() * result._d2() +
                 result._d3() * result._d3();

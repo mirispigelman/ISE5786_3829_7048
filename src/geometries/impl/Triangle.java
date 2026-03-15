@@ -7,7 +7,8 @@ import primitives.Vector;
  * Class Triangle represents a two-dimensional triangle in 3D space.
  * Inherits from Polygon.
  *
- * @author Your Name
+ * @author Naama Shafer
+ * @author Miri Shpigelman
  */
 public final class Triangle extends Polygon {
 

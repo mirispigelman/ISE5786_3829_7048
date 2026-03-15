@@ -4,6 +4,8 @@ import geometries.api.Geometry;
 
 /**
  * Abstract class for all geometries with a radius.
+ * * @author Naama Shafer
+ * @author Miri Shpigelman
  */
 public abstract class RadialGeometry extends Geometry {
     protected final double _radius;

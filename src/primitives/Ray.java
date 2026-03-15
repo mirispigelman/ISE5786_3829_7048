@@ -6,7 +6,8 @@ import java.util.Objects;
  * Class Ray represents a half-line in 3D space, defined by a starting point
  * and a normalized direction vector.
  *
- * @author Your Name
+ * @author Naama Shafer
+ * @author Miri Shpigelman
  */
 public class Ray {
     /**

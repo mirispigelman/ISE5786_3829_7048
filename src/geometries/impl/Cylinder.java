@@ -6,6 +6,8 @@ import primitives.Vector;
 
 /**
  * Represents a finite cylinder in 3D space.
+ * * @author Naama Shafer
+ * @author Miri Shpigelman
  */
 public final class Cylinder extends Tube {
     private final double _height;

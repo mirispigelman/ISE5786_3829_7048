@@ -6,6 +6,8 @@ import primitives.Vector;
 
 /**
  * Class Plane represents a flat plane in 3D space.
+ * * @author Naama Shafer
+ * @author Miri Shpigelman
  */
 public final class Plane extends Geometry {
     private final Point _point;

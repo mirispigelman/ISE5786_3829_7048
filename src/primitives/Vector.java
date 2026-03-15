@@ -4,12 +4,11 @@ package primitives;
  * Class Vector represents a direction and magnitude in 3D space.
  * Inherits from Point.
  *
- * @author Your Name
+ * @author Naama Shafer
+ * @author Miri Shpigelman
  */
 public final class Vector extends Point {
-    /**
-     * Constant representing a unit vector on the Z axis
-     */
+
     /** Constant representing a unit vector on the X axis */
     public static final Vector AXIS_X = new Vector(1, 0, 0);
     /** Constant representing a unit vector on the Y axis */

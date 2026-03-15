@@ -5,6 +5,8 @@ import primitives.Vector;
 
 /**
  * Class Sphere represents a sphere in 3D space.
+ * * @author Naama Shafer
+ * @author Miri Shpigelman
  */
 public final class Sphere extends RadialGeometry {
     private final Point _center;
@@ -22,7 +24,6 @@ public final class Sphere extends RadialGeometry {
 
     @Override
     public Vector getNormal(Point point) {
-        // בשלב זה מחזירים null לפי ההוראות
         return null;
     }
 
