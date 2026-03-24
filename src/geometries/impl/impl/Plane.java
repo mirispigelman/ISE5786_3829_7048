@@ -1,6 +1,6 @@
-package geometries.impl;
+package geometries.impl.impl;
 
-import geometries.api.Geometry;
+import geometries.impl.api.Geometry;
 import primitives.Point;
 import primitives.Vector;
 
@@ -22,7 +22,18 @@ public final class Plane extends Geometry {
      */
     public Plane(Point p1, Point p2, Point p3) {
         this._point = p1;
-        this._normal = null;
+
+        // 1. Create two vectors on the plane starting from the same point
+        Vector v1 = p2.subtract(p1);
+        Vector v2 = p3.subtract(p1);
+
+        // 2. Their cross product results in a vector orthogonal to the plane (the normal)
+        // Note: If the points are collinear, crossProduct will automatically throw an
+        // exception because the result is a zero vector.
+        Vector n = v1.crossProduct(v2);
+
+        // 3. Normalize the normal vector (to ensure its length is 1) and store it
+        this._normal = n.normalize();
     }
 
     /**

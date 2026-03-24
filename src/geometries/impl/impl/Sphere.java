@@ -1,4 +1,4 @@
-package geometries.impl;
+package geometries.impl.impl;
 
 import primitives.Point;
 import primitives.Vector;
@@ -22,9 +22,11 @@ public final class Sphere extends RadialGeometry {
         this._center = center;
     }
 
+
     @Override
-    public Vector getNormal(Point point) {
-        return null;
+    public Vector getNormal(Point p) {
+        // n = normalize(P - Center)
+        return p.subtract(_center).normalize();
     }
 
     @Override

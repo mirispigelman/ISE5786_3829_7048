@@ -1,6 +1,6 @@
-package geometries.impl;
+package geometries.impl.impl;
 
-import geometries.api.Geometry;
+import geometries.impl.api.Geometry;
 import java.util.List;
 import primitives.Point;
 import primitives.Vector;

@@ -1,11 +1,11 @@
 package test;
 
-import geometries.impl.Cylinder;
-import geometries.impl.Plane;
-import geometries.impl.Polygon;
-import geometries.impl.Sphere;
-import geometries.impl.Triangle;
-import geometries.impl.Tube;
+import geometries.impl.impl.Cylinder;
+import geometries.impl.impl.Plane;
+import geometries.impl.impl.Polygon;
+import geometries.impl.impl.Sphere;
+import geometries.impl.impl.Triangle;
+import geometries.impl.impl.Tube;
 import primitives.Double3;
 import primitives.Point;
 import primitives.Ray;

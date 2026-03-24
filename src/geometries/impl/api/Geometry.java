@@ -1,4 +1,4 @@
-package geometries.api;
+package geometries.impl.api;
 
 import primitives.Point;
 import primitives.Vector;

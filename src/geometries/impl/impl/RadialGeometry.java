@@ -1,6 +1,6 @@
-package geometries.impl;
+package geometries.impl.impl;
 
-import geometries.api.Geometry;
+import geometries.impl.api.Geometry;
 
 /**
  * Abstract class for all geometries with a radius.
