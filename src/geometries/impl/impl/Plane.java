@@ -1,12 +1,15 @@
 package geometries.impl.impl;
 
 import geometries.impl.api.Geometry;
+import java.util.List;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
 
 /**
  * Class Plane represents a flat plane in 3D space.
  * * @author Naama Shafer
+ *
  * @author Miri Shpigelman
  */
 public final class Plane extends Geometry {
@@ -55,5 +58,40 @@ public final class Plane extends Geometry {
     @Override
     public String toString() {
         return "Plane: point=" + _point + ", normal=" + _normal;
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        Point p0 = ray.origin();
+        Vector v = ray.direction();
+        Vector n = _normal;
+
+        // חישוב המכנה: n * v
+        double nv = n.dotProduct(v);
+
+        // אם המכנה הוא 0, הקרן מקבילה למישור (או כלולה בו) - אין חיתוך
+        if (primitives.Util.isZero(nv)) {
+            return null;
+        }
+
+        // חישוב המונה: n * (Q0 - P0)
+        // אם p0 == _point, המונה יהיה 0 (הקרן מתחילה על המישור)
+        if (_point.equals(p0)) {
+            return null;
+        }
+
+        Vector p0Q0 = _point.subtract(p0);
+        double nP0Q0 = n.dotProduct(p0Q0);
+
+        // t = (n * (Q0 - P0)) / (n * v)
+        double t = nP0Q0 / nv;
+
+        // אנחנו מחזירים נקודה רק אם t > 0 (החיתוך הוא בכיוון הקרן)
+        // הערה: t=0 אומר שהקרן מתחילה על המישור, ולפי ההנחיות זה null
+        if (t > 0) {
+            return List.of(ray.getPoint(t));
+        }
+
+        return null;
     }
 }

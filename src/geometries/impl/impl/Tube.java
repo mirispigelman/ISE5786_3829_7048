@@ -1,5 +1,6 @@
 package geometries.impl.impl;
 
+import java.util.List;
 import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
@@ -7,6 +8,7 @@ import primitives.Vector;
 /**
  * Represents an infinite tube in 3D space.
  * * @author Naama Shafer
+ *
  * @author Miri Shpigelman
  */
 public class Tube extends RadialGeometry {
@@ -44,5 +46,10 @@ public class Tube extends RadialGeometry {
     @Override
     public String toString() {
         return "Tube: axis=" + _axis + ", radius=" + _radius;
+    }
+
+    @Override
+    public List<Point> findIntersections(Ray ray) {
+        return null; // בשלב זה מחזירים null לפי ההנחיות
     }
 }
