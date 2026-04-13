@@ -1,6 +1,5 @@
 package geometries.impl;
 
-import geometries.impl.impl.Plane;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
@@ -13,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
- * Unit tests for {@link geometries.impl.impl.Plane}
+ * Unit tests for {@link Plane}
  *
  * @author Naama Shafer
  * @author Miri Shpigelman

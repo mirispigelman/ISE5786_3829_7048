@@ -1,6 +1,6 @@
-package geometries.impl.impl;
+package geometries.impl;
 
-import geometries.impl.api.Geometry;
+import geometries.api.Geometry;
 import java.util.List;
 import primitives.Point;
 import primitives.Ray;
@@ -60,22 +60,22 @@ public final class Plane extends Geometry {
         return "Plane: point=" + _point + ", normal=" + _normal;
     }
 
+
     @Override
     public List<Point> findIntersections(Ray ray) {
         Point p0 = ray.origin();
         Vector v = ray.direction();
         Vector n = _normal;
 
-        // חישוב המכנה: n * v
+        // n * v
         double nv = n.dotProduct(v);
 
-        // אם המכנה הוא 0, הקרן מקבילה למישור (או כלולה בו) - אין חיתוך
+        // אם המכנה הוא 0, הקרן מקבילה למישור
         if (primitives.Util.isZero(nv)) {
             return null;
         }
 
-        // חישוב המונה: n * (Q0 - P0)
-        // אם p0 == _point, המונה יהיה 0 (הקרן מתחילה על המישור)
+        // המונה: n * (Q0 - P0)
         if (_point.equals(p0)) {
             return null;
         }
@@ -84,10 +84,10 @@ public final class Plane extends Geometry {
         double nP0Q0 = n.dotProduct(p0Q0);
 
         // t = (n * (Q0 - P0)) / (n * v)
-        double t = nP0Q0 / nv;
+        // שימוש ב-alignZero כדי למנוע שגיאות דיוק
+        double t = primitives.Util.alignZero(nP0Q0 / nv);
 
-        // אנחנו מחזירים נקודה רק אם t > 0 (החיתוך הוא בכיוון הקרן)
-        // הערה: t=0 אומר שהקרן מתחילה על המישור, ולפי ההנחיות זה null
+        // t > 0 אומר שהחיתוך לפני ראש הקרן
         if (t > 0) {
             return List.of(ray.getPoint(t));
         }

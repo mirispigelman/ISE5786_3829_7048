@@ -3,7 +3,6 @@ package geometries.impl;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 import primitives.*;
-import geometries.impl.impl.Tube;
 
 /**
  * Unit tests for {@link Tube}

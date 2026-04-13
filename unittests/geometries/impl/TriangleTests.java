@@ -1,6 +1,5 @@
 package geometries.impl;
 
-import geometries.impl.impl.Triangle;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Ray;
@@ -11,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 /**
- * Unit tests for {@link geometries.impl.impl.Triangle}
+ * Unit tests for {@link Triangle}
  *
  * @author Naama Shafer
  * @author Miri Shpigelman

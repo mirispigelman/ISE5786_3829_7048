@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import geometries.impl.impl.Polygon;
 import primitives.Point;
 import primitives.Vector;
 

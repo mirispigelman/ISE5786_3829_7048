@@ -1,6 +1,5 @@
 package geometries.impl;
 
-import geometries.impl.impl.Sphere;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
@@ -12,14 +11,14 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
- * Unit tests for {@link geometries.impl.impl.Sphere}
+ * Unit tests for {@link Sphere}
  *
  * @author Naama Shafer
  * @author Miri Shpigelman
  */
 class SphereTests {
     /**
-     * Test method for {@link geometries.impl.impl.Sphere#getNormal(primitives.Point)}.
+     * Test method for {@link Sphere#getNormal(primitives.Point)}.
      */
     @Test
     void testGetNormal() {

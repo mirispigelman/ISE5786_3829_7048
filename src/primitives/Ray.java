@@ -1,6 +1,7 @@
 package primitives;
 
 import java.util.Objects;
+import static primitives.Util.*;
 
 /**
  * Class Ray represents a half-line in 3D space, defined by a starting point
@@ -75,9 +76,12 @@ public class Ray {
      */
     public Point getPoint(double t) {
         try {
+            // Trying to calculate: head + t * direction
             return _origin.add(_direction.scale(t));
         } catch (Exception e) {
-            return _origin; // למקרה ש-t הוא אפס ונוצר וקטור אפס
+            // If t is zero or so small that scale(t) results in a zero vector exception,
+            // we return the head of the ray as the "safest" point.
+            return _origin;
         }
     }
 }

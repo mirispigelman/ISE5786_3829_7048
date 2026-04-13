@@ -1,4 +1,4 @@
-package geometries.impl.impl;
+package geometries.impl;
 
 import java.util.List;
 import primitives.Point;
@@ -39,11 +39,10 @@ public final class Sphere extends RadialGeometry {
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-
         Point p0 = ray.origin();
         Vector v = ray.direction();
 
-        // אם ראש הקרן הוא במרכז הכדור
+        // If the ray starts at the center of the sphere
         if (p0.equals(_center)) {
             return List.of(ray.getPoint(_radius));
         }
@@ -53,16 +52,17 @@ public final class Sphere extends RadialGeometry {
         double dSquared = l.lengthSquared() - tm * tm;
         double rSquared = _radius * _radius;
 
-        // אם המרחק מהמרכז גדול מהרדיוס - אין חיתוכים
-        if (dSquared >= rSquared) {
+        // Using isZero/alignZero to check if d >= r
+        if (primitives.Util.alignZero(dSquared - rSquared) >= 0) {
             return null;
         }
 
         double th = Math.sqrt(rSquared - dSquared);
-        double t1 = tm - th;
-        double t2 = tm + th;
+        double t1 = primitives.Util.alignZero(tm - th);
+        double t2 = primitives.Util.alignZero(tm + th);
 
-        // מחזירים רק נקודות שנמצאות "לפני" הקרן (t > 0)
+        // Returning only points that are in front of the ray (t > 0)
+        // We use getPoint as required for Refactoring
         if (t1 > 0 && t2 > 0) {
             return List.of(ray.getPoint(t1), ray.getPoint(t2));
         }
