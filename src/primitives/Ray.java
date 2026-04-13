@@ -66,4 +66,18 @@ public class Ray {
     public String toString() {
         return "Ray: origin=" + _origin + ", direction=" + _direction;
     }
+
+    /**
+     * Calculates a point on the ray at a distance t from the head
+     *
+     * @param t distance from the ray head
+     * @return the point P = _origin + t*v
+     */
+    public Point getPoint(double t) {
+        try {
+            return _origin.add(_direction.scale(t));
+        } catch (Exception e) {
+            return _origin; // למקרה ש-t הוא אפס ונוצר וקטור אפס
+        }
+    }
 }
