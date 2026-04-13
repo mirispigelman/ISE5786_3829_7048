@@ -7,12 +7,12 @@ import org.junit.jupiter.api.Test;
 import primitives.*;
 
 /**
- * Unit tests for {@link geometries.impl.Sphere}
+ * Unit tests for {@link geometries.impl.impl.Sphere}
  * @author Naama Shafer
  * @author Miri Shpigelman
  */
 class SphereTests {
-    /** Test method for {@link geometries.impl.Sphere#getNormal(primitives.Point)}. */
+    /** Test method for {@link geometries.impl.impl.Sphere#getNormal(primitives.Point)}. */
     @Test
     void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
