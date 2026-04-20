@@ -70,12 +70,12 @@ public final class Plane extends Geometry {
         // n * v
         double nv = n.dotProduct(v);
 
-        // אם המכנה הוא 0, הקרן מקבילה למישור
+
         if (primitives.Util.isZero(nv)) {
             return null;
         }
 
-        // המונה: n * (Q0 - P0)
+        //  n * (Q0 - P0)
         if (_point.equals(p0)) {
             return null;
         }
@@ -84,10 +84,10 @@ public final class Plane extends Geometry {
         double nP0Q0 = n.dotProduct(p0Q0);
 
         // t = (n * (Q0 - P0)) / (n * v)
-        // שימוש ב-alignZero כדי למנוע שגיאות דיוק
+
         double t = primitives.Util.alignZero(nP0Q0 / nv);
 
-        // t > 0 אומר שהחיתוך לפני ראש הקרן
+        // t > 0
         if (t > 0) {
             return List.of(ray.getPoint(t));
         }

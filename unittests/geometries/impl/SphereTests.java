@@ -32,7 +32,7 @@ class SphereTests {
 
     @Test
     void testFindIntersections() {
-        Sphere sphere = new Sphere(new Point(1, 0, 0), 1d); // כדור ברדיוס 1 שמרכזו ב-(1,0,0) [cite: 364]
+        Sphere sphere = new Sphere(new Point(1, 0, 0), 1d);
 
         // ============ Equivalence Partitions Tests ==============
 
@@ -47,7 +47,6 @@ class SphereTests {
 
         assertEquals(2, result.size(), "Wrong number of points");
 
-// בדיקה ששתי הנקודות קיימות ברשימה ללא חשיבות לסדר ביניהן
         assertTrue(result.contains(p1) && result.contains(p2),
                 "Ray crosses sphere twice but the points are not as expected");
 

@@ -31,7 +31,6 @@ class TriangleTests {
        
         // EP01: Inside triangle
         Triangle tr = new Triangle(new Point(1, 0, 0), new Point(0, 1, 0), new Point(0, 0, 1));
-// קרן שיוצאת מהמרכז (0,0,0) לכיוון הנקודה (0.3, 0.3, 0.3) שהיא בוודאות בתוך המשולש
         var result = tr.findIntersections(new Ray(new Point(0, 0, 0), new Vector(1, 1, 1)));
         assertNotNull(result, "Should be an intersection");
         assertEquals(1, result.size(), "Should be 1 point");

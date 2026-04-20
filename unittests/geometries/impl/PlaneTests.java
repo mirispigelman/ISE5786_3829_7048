@@ -41,7 +41,7 @@ class PlaneTests {
 
     @Test
     void testGetNormal() {
-        Plane pl = new Plane(new Point(0, 0, 1), new Vector(0, 0, 1)); // תיקון: נקודה לפני וקטור        // ============ Equivalence Partitions Tests ==============
+        Plane pl = new Plane(new Point(0, 0, 1), new Vector(0, 0, 1)); //         // ============ Equivalence Partitions Tests ==============
         // EP01: Simple getNormal test
         assertEquals(new Vector(0, 0, 1), pl.getNormal(new Point(1, 2, 1)), "ERROR: Plane getNormal() wrong");
 
@@ -55,7 +55,7 @@ class PlaneTests {
 
     @Test
     void testFindIntersections() {
-        Plane pl = new Plane(new Point(0, 0, 1), new Vector(0, 0, 1)); // מישור Z=1
+        Plane pl = new Plane(new Point(0, 0, 1), new Vector(0, 0, 1)); //  Z=1
 
         // ============ Equivalence Partitions Tests ==============
 

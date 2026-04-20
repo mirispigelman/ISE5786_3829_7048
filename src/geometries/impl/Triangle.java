@@ -39,13 +39,11 @@ public final class Triangle extends Polygon {
     @Override
     public List<Point> findIntersections(Ray ray) {
 
-        // שלב 1: מציאת חיתוך עם המישור של המשולש
-        // הערה: מכיוון ש-Triangle יורש מ-Polygon, אפשר להשתמש במישור שלו
+
         var intersections = _vertices.get(0).add(_vertices.get(1).subtract(_vertices.get(0))).equals(_vertices.get(2)) ? null :
                 new Plane(_vertices.get(0), _vertices.get(1), _vertices.get(2)).findIntersections(ray);
 
-        // דרך פשוטה יותר אם כבר יש לך שדה plane ב-Polygon:
-        // var intersections = plane.findIntersections(ray);
+
 
         if (intersections == null) return null;
 
@@ -64,7 +62,7 @@ public final class Triangle extends Polygon {
         double d2 = v.dotProduct(n2);
         double d3 = v.dotProduct(n3);
 
-        // אם כל המכפלות הסקלריות הן באותו סימן (כולן חיוביות או כולן שליליות) - הנקודה בפנים
+
         if ((d1 > 0 && d2 > 0 && d3 > 0) || (d1 < 0 && d2 < 0 && d3 < 0)) {
             return intersections;
         }
