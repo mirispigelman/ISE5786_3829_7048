@@ -96,6 +96,7 @@ public class Camera implements Cloneable {
             return this;
         }
 
+
         public Builder setDirection(Vector to, Vector up) {
             this.directionVec = to;
             this.generalUp = up;
@@ -132,17 +133,20 @@ public class Camera implements Cloneable {
         }
 
         /**
+         * Checks that the resolution data is positive.
+         * Throws IllegalArgumentException if not. [cite: 74, 75]
+         */
+        private void checkResolution() {
+            if (_camera.nX <= 0 || _camera.nY <= 0)
+                throw new IllegalArgumentException("Resolution must be positive");
+        }
+
+        /**
          * Validates and builds the final Camera object
          */
         public Camera build() {
-            // 1. Check Resolution [cite: 66, 74]
-            if (_camera.nX <= 0 || _camera.nY <= 0)
-                throw new IllegalArgumentException("Resolution must be positive");
-
-            // 2. Check and Set Location/Orientation [cite: 66, 78]
+            checkResolution();
             checkLocationAndDirection();
-
-            // 3. Check and Set View Plane [cite: 67, 79]
             checkViewPlane();
 
             try {
