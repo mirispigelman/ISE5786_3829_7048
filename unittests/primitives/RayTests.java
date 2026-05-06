@@ -1,5 +1,5 @@
 package primitives;
-
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
 
@@ -41,5 +41,26 @@ class RayTests {
         // BV01: t = 0 - The point should be exactly the ray's origin
         assertEquals(new Point(1, 0, 0), ray.getPoint(0),
                 "getPoint(t) with zero t failed");
+    }
+    @Test
+    void testFindClosestPoint() {
+        Ray ray = new Ray(new Point(0, 0, 1), new Vector(0, 0, -1));
+        Point p1 = new Point(0, 0, -1);
+        Point p2 = new Point(0, 0, -2);
+        Point p3 = new Point(0, 0, -3);
+
+        // ============ Equivalence Partitions Tests ==============
+        // EP: The closest point is in the middle of the list
+        assertEquals(p1, ray.findClosestPoint(List.of(p2, p1, p3)), "Closest point in the middle failed");
+
+        // =============== Boundary Values Tests ==================
+        // BV: The list is empty (null)
+        assertNull(ray.findClosestPoint(null), "Empty list should return null");
+
+        // BV: The closest point is the first in the list
+        assertEquals(p1, ray.findClosestPoint(List.of(p1, p2, p3)), "Closest point at the beginning failed");
+
+        // BV: The closest point is the last in the list
+        assertEquals(p1, ray.findClosestPoint(List.of(p2, p3, p1)), "Closest point at the end failed");
     }
 }

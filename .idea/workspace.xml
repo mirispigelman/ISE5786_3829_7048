@@ -4,7 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e35a4b1d-ce71-4149-9da7-35898aef66e8" name="Changes" comment="finish PR03" />
+    <list default="true" id="e35a4b1d-ce71-4149-9da7-35898aef66e8" name="Changes" comment="finish PR04">
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/lighting/AmbientLight.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/primitives/Color.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/ImageWriter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/RayTracerBase.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/RayTracerType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/renderer/SimpleRayTracer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/scene/Scene.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unittests/renderer/ImageWriterTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/unittests/renderer/RenderTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/primitives/Ray.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/primitives/Ray.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/ISE5786_3829_7048/primitives/RayTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/ISE5786_3829_7048/primitives/RayTests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/primitives/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/primitives/Ray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/renderer/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/unittests/primitives/RayTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unittests/primitives/RayTests.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -58,8 +75,10 @@
     &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
     &quot;JUnit.All in ISE5786_3829_7048.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.GeometriesTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ImageWriterTests.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.PlaneTests.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.RayTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RenderTests.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.SphereTests.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.TriangleTests.executor&quot;: &quot;Run&quot;,
     &quot;JUnit.geometries in ISE5786_3829_7048.executor&quot;: &quot;Run&quot;,
@@ -81,7 +100,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.All in ISE5786_3829_7048">
+  <component name="RunManager" selected="JUnit.RenderTests">
     <configuration name="All in ISE5786_3829_7048" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5786_3829_7048" />
       <option name="PACKAGE_NAME" value="" />
@@ -90,16 +109,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PlaneTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="ImageWriterTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5786_3829_7048" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="geometries.impl.*" />
+          <option name="PATTERN" value="renderer.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="geometries.impl" />
-      <option name="MAIN_CLASS_NAME" value="geometries.impl.PlaneTests" />
+      <option name="PACKAGE_NAME" value="renderer" />
+      <option name="MAIN_CLASS_NAME" value="renderer.ImageWriterTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -120,16 +139,16 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TriangleTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="RenderTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5786_3829_7048" />
       <extension name="coverage">
         <pattern>
-          <option name="PATTERN" value="geometries.impl.*" />
+          <option name="PATTERN" value="renderer.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
-      <option name="PACKAGE_NAME" value="geometries.impl" />
-      <option name="MAIN_CLASS_NAME" value="geometries.impl.TriangleTests" />
+      <option name="PACKAGE_NAME" value="renderer" />
+      <option name="MAIN_CLASS_NAME" value="renderer.RenderTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -151,11 +170,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.RenderTests" />
+        <item itemvalue="JUnit.RayTests" />
+        <item itemvalue="JUnit.ImageWriterTests" />
         <item itemvalue="JUnit.All in ISE5786_3829_7048" />
         <item itemvalue="JUnit.geometries in ISE5786_3829_7048" />
-        <item itemvalue="JUnit.RayTests" />
-        <item itemvalue="JUnit.TriangleTests" />
-        <item itemvalue="JUnit.PlaneTests" />
       </list>
     </recent_temporary>
   </component>
@@ -184,7 +203,9 @@
       <workItem from="1776071507181" duration="19612000" />
       <workItem from="1776267021400" duration="5179000" />
       <workItem from="1777407976463" duration="1430000" />
-      <workItem from="1777627848312" duration="425000" />
+      <workItem from="1777627848312" duration="2009000" />
+      <workItem from="1778011383243" duration="5728000" />
+      <workItem from="1778057187433" duration="606000" />
     </task>
     <task id="LOCAL‎-00001" summary="Finish Stage 1 implementation according to new instructions">
       <option name="closed" value="true" />
@@ -234,7 +255,23 @@
       <option name="project" value="LOCAL‎" />
       <updated>1776677178246</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL‎-00007" summary="finish PR04">
+      <option name="closed" value="true" />
+      <created>1777628351382</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL‎-00007" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1777628351382</updated>
+    </task>
+    <task id="LOCAL‎-00008" summary="finish PR04">
+      <option name="closed" value="true" />
+      <created>1777628593400</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL‎-00008" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1777628593400</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -269,6 +306,7 @@
     <MESSAGE value="My work on intersections" />
     <MESSAGE value="level 3 completed" />
     <MESSAGE value="finish PR03" />
-    <option name="LAST_COMMIT_MESSAGE" value="finish PR03" />
+    <MESSAGE value="finish PR04" />
+    <option name="LAST_COMMIT_MESSAGE" value="finish PR04" />
   </component>
 </project>

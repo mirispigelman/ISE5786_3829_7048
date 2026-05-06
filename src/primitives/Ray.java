@@ -1,5 +1,6 @@
 package primitives;
 
+import java.util.List;
 import java.util.Objects;
 import static primitives.Util.*;
 
@@ -83,5 +84,27 @@ public class Ray {
             // we return the head of the ray as the "safest" point.
             return _origin;
         }
+    }
+    /**
+     * Finds the closest point to the ray's head from a list of points.
+     * @param points list of points to check
+     * @return the closest point, or null if the list is empty
+     */
+    public Point findClosestPoint(List<Point> points) {
+        if (points == null || points.isEmpty()) //
+            return null;
+
+        Point closestPoint = null;
+        double minDistanceSq = Double.POSITIVE_INFINITY; //
+
+        for (Point p : points) {
+            // Calculate squared distance to avoid expensive square root operation[cite: 3]
+            double distanceSq = p.distanceSquared(_origin);
+            if (distanceSq < minDistanceSq) {
+                minDistanceSq = distanceSq;
+                closestPoint = p;
+            }
+        }
+        return closestPoint;
     }
 }
