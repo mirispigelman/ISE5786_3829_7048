@@ -4,23 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e35a4b1d-ce71-4149-9da7-35898aef66e8" name="Changes" comment="finish PR04">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/lighting/AmbientLight.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/primitives/Color.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/ImageWriter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/RayTracerBase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/RayTracerType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/renderer/SimpleRayTracer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/scene/Scene.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/unittests/renderer/ImageWriterTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/unittests/renderer/RenderTests.java" afterDir="false" />
+    <list default="true" id="e35a4b1d-ce71-4149-9da7-35898aef66e8" name="Changes" comment="Finish Stage 5 - Basic Rendering Engine">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/primitives/Ray.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/primitives/Ray.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/test/ISE5786_3829_7048/primitives/RayTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/ISE5786_3829_7048/primitives/RayTests.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/primitives/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/primitives/Ray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/Camera.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unittests/primitives/RayTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unittests/primitives/RayTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +87,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="JUnit.RenderTests">
+  <component name="RunManager" selected="JUnit.All in ISE5786_3829_7048">
     <configuration name="All in ISE5786_3829_7048" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5786_3829_7048" />
       <option name="PACKAGE_NAME" value="" />
@@ -170,10 +157,10 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.All in ISE5786_3829_7048" />
         <item itemvalue="JUnit.RenderTests" />
         <item itemvalue="JUnit.RayTests" />
         <item itemvalue="JUnit.ImageWriterTests" />
-        <item itemvalue="JUnit.All in ISE5786_3829_7048" />
         <item itemvalue="JUnit.geometries in ISE5786_3829_7048" />
       </list>
     </recent_temporary>
@@ -205,7 +192,9 @@
       <workItem from="1777407976463" duration="1430000" />
       <workItem from="1777627848312" duration="2009000" />
       <workItem from="1778011383243" duration="5728000" />
-      <workItem from="1778057187433" duration="606000" />
+      <workItem from="1778057187433" duration="3010000" />
+      <workItem from="1778607884763" duration="267000" />
+      <workItem from="1778614231396" duration="673000" />
     </task>
     <task id="LOCAL‎-00001" summary="Finish Stage 1 implementation according to new instructions">
       <option name="closed" value="true" />
@@ -271,7 +260,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1777628593400</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL‎-00009" summary="Finish Stage 5 - Basic Rendering Engine">
+      <option name="closed" value="true" />
+      <created>1778057947696</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL‎-00009" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1778057947696</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,6 +304,7 @@
     <MESSAGE value="level 3 completed" />
     <MESSAGE value="finish PR03" />
     <MESSAGE value="finish PR04" />
-    <option name="LAST_COMMIT_MESSAGE" value="finish PR04" />
+    <MESSAGE value="Finish Stage 5 - Basic Rendering Engine" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish Stage 5 - Basic Rendering Engine" />
   </component>
 </project>

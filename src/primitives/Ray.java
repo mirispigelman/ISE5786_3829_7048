@@ -91,7 +91,7 @@ public class Ray {
      * @return the closest point, or null if the list is empty
      */
     public Point findClosestPoint(List<Point> points) {
-        if (points == null || points.isEmpty()) //
+        if (points == null ) //
             return null;
 
         Point closestPoint = null;
