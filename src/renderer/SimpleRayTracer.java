@@ -1,7 +1,6 @@
 package renderer;
-
+import geometries.api.Intersectable.Intersection;
 import primitives.Color;
-import primitives.Point;
 import primitives.Ray;
 import scene.Scene;
 
@@ -20,18 +19,19 @@ class SimpleRayTracer extends RayTracerBase {
 
     @Override
     public Color traceRay(Ray ray) {
-        // Find all intersections of the ray with the scene geometries[cite: 3]
-        var intersections = _scene.geometries.findIntersections(ray);
+        // 1. Get all intersections (using the new NVI method)
+        var intersections = _scene.geometries.calcIntersections(ray);
 
-        // If there are no intersections, return the background color[cite: 3]
-        if (intersections == null)
+        // 2. If no intersections, return background color
+        if (intersections == null) {
             return _scene.background;
+        }
 
-        // Find the closest point to the ray head[cite: 3]
-        Point closestPoint = ray.findClosestPoint(intersections);
+        // 3. Find the closest intersection point and its geometry
+        var closestIntersection = ray.findClosestIntersection(intersections);
 
-        // Return the color computed at that point[cite: 3]
-        return calcColor(closestPoint);
+        // 4. Calculate the color at this intersection
+        return calcColor(closestIntersection);
     }
 
     /**
@@ -40,7 +40,10 @@ class SimpleRayTracer extends RayTracerBase {
      * @param intersection the point on a geometry
      * @return the color at the point
      */
-    private Color calcColor(Point intersection) {
-        return _scene.ambientLight.getIntensity();
+    private Color calcColor(Intersection intersection) {
+        // Formula: Ambient Light Intensity + Geometry Emission Light
+        return _scene.ambientLight.getIntensity()
+                .scale(intersection.material.kA)
+                .add(intersection.geometry.getEmission());
     }
 }

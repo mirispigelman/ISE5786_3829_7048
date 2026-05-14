@@ -34,6 +34,7 @@ class SphereTests {
     void testFindIntersections() {
         Sphere sphere = new Sphere(new Point(1, 0, 0), 1d);
 
+
         // ============ Equivalence Partitions Tests ==============
 
         // EP01: Ray's line is outside the sphere (0 points) [cite: 123, 373]

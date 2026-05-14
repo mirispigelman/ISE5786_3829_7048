@@ -6,6 +6,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import static primitives.Util.*;
+
 /**
  * Class Plane represents a flat plane in 3D space.
  * * @author Naama Shafer
@@ -62,36 +64,37 @@ public final class Plane extends Geometry {
 
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    protected List<Intersection> calcIntersectionsHelper(Ray ray) {
         Point p0 = ray.origin();
         Vector v = ray.direction();
         Vector n = _normal;
 
-        // n * v
+        // denominator: n * v
         double nv = n.dotProduct(v);
 
-
-        if (primitives.Util.isZero(nv)) {
+        // ray is parallel to the plane (nv == 0) - no intersections
+        if (isZero(nv)) {
             return null;
         }
 
-        //  n * (Q0 - P0)
+        // ray origin is on the plane
         if (_point.equals(p0)) {
             return null;
         }
 
+        // numerator: n * (Q0 - P0)
         Vector p0Q0 = _point.subtract(p0);
         double nP0Q0 = n.dotProduct(p0Q0);
 
         // t = (n * (Q0 - P0)) / (n * v)
+        double t = alignZero(nP0Q0 / nv);
 
-        double t = primitives.Util.alignZero(nP0Q0 / nv);
-
-        // t > 0
-        if (t > 0) {
-            return List.of(ray.getPoint(t));
+        // intersection is behind the ray origin or at the origin
+        if (t <= 0) {
+            return null;
         }
 
-        return null;
+        // return the intersection wrapped in an Intersection object with this plane
+        return List.of(new Intersection(this, ray.getPoint(t)));
     }
 }

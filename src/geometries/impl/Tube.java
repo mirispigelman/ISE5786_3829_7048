@@ -48,8 +48,10 @@ public class Tube extends RadialGeometry {
         return "Tube: axis=" + _axis + ", radius=" + _radius;
     }
 
+
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    protected List<Intersection> calcIntersectionsHelper(Ray ray) {
+        // Currently not implemented, returning null as in the original code
         return null;
     }
 }
