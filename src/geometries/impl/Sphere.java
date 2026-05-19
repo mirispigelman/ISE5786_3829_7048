@@ -5,6 +5,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import static primitives.Util.alignZero;
+
 /**
  * Class Sphere represents a sphere in 3D space.
  * * @author Naama Shafer
@@ -37,14 +39,17 @@ public final class Sphere extends RadialGeometry {
         return "Sphere: center=" + _center + ", radius=" + _radius;
     }
 
+
+
     @Override
-    public List<Point> findIntersections(Ray ray) {
+    protected List<Intersection> calcIntersectionsHelper(Ray ray) {
         Point p0 = ray.origin();
         Vector v = ray.direction();
 
         // If the ray starts at the center of the sphere
         if (p0.equals(_center)) {
-            return List.of(ray.getPoint(_radius));
+
+            return List.of(new Intersection(this, ray.getPoint(_radius)));
         }
 
         Vector l = _center.subtract(p0);
@@ -52,25 +57,29 @@ public final class Sphere extends RadialGeometry {
         double dSquared = l.lengthSquared() - tm * tm;
         double rSquared = _radius * _radius;
 
-        // Using isZero/alignZero to check if d >= r
-        if (primitives.Util.alignZero(dSquared - rSquared) >= 0) {
+        // Using alignZero to check if d >= r
+        if (alignZero(dSquared - rSquared) >= 0) {
             return null;
         }
 
         double th = Math.sqrt(rSquared - dSquared);
-        double t1 = primitives.Util.alignZero(tm - th);
-        double t2 = primitives.Util.alignZero(tm + th);
+        double t1 = alignZero(tm - th);
+        double t2 = alignZero(tm + th);
 
-        // Returning only points that are in front of the ray (t > 0)
-        // We use getPoint as required for Refactoring
+
         if (t1 > 0 && t2 > 0) {
-            return List.of(ray.getPoint(t1), ray.getPoint(t2));
+            return List.of(
+                    new Intersection(this, ray.getPoint(t1)),
+                    new Intersection(this, ray.getPoint(t2))
+            );
         }
+
         if (t1 > 0) {
-            return List.of(ray.getPoint(t1));
+            return List.of(new Intersection(this, ray.getPoint(t1)));
         }
+
         if (t2 > 0) {
-            return List.of(ray.getPoint(t2));
+            return List.of(new Intersection(this, ray.getPoint(t2)));
         }
 
         return null;

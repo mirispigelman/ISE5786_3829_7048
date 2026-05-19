@@ -2,7 +2,8 @@ package primitives;
 
 import java.util.List;
 import java.util.Objects;
-import static primitives.Util.*;
+
+import geometries.api.Intersectable.Intersection;
 
 /**
  * Class Ray represents a half-line in 3D space, defined by a starting point
@@ -90,21 +91,40 @@ public class Ray {
      * @param points list of points to check
      * @return the closest point, or null if the list is empty
      */
+    /**
+     * Find the closest point to the ray origin
+     * @param points list of points
+     * @return the closest point
+     */
     public Point findClosestPoint(List<Point> points) {
-        if (points == null || points.isEmpty()) //
+        return points == null ? null
+                : findClosestIntersection(
+                points.stream()
+                        .map(point -> new Intersection(null, point)) // Convert points to intersections [cite: 71, 378]
+                        .toList()
+        ).point;
+    }
+    /**
+     * Find the closest intersection point to the ray origin
+     * @param intersections list of intersections
+     * @return the closest intersection point
+     */
+    public Intersection findClosestIntersection(List<Intersection> intersections) {
+        if (intersections == null || intersections.isEmpty()) {
             return null;
+        }
 
-        Point closestPoint = null;
-        double minDistanceSq = Double.POSITIVE_INFINITY; //
+        Intersection closest = null;
+        double minDistanceSq = Double.POSITIVE_INFINITY;
 
-        for (Point p : points) {
-            // Calculate squared distance to avoid expensive square root operation[cite: 3]
-            double distanceSq = p.distanceSquared(_origin);
-            if (distanceSq < minDistanceSq) {
-                minDistanceSq = distanceSq;
-                closestPoint = p;
+        for (Intersection intersection : intersections) {
+            // We use distanceSquared to save the expensive square root calculation
+            double distSq = _origin.distanceSquared(intersection.point);
+            if (distSq < minDistanceSq) {
+                minDistanceSq = distSq;
+                closest = intersection;
             }
         }
-        return closestPoint;
+        return closest;
     }
 }

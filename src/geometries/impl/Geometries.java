@@ -1,8 +1,9 @@
 package geometries.impl;
 
 import geometries.api.Intersectable;
-import primitives.Point;
+
 import primitives.Ray;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,23 +45,24 @@ public class Geometries extends Intersectable {
     }
 
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        List<Point> result = null;
+    protected List<Intersection> calcIntersectionsHelper(Ray ray) {
+        List<Intersection> result = null;
 
         // Iterate through all geometries using a foreach loop (KIS principle)
         for (Intersectable item : _geometries) {
-            List<Point> itemPoints = item.findIntersections(ray);
+            // We MUST call the public calcIntersections method, not the helper [cite: 57, 59, 353]
+            var itemIntersections = item.calcIntersections(ray);
 
-            if (itemPoints != null) {
+            if (itemIntersections != null) {
                 // Lazy initialization: create the list only when the first intersection is found
                 if (result == null) {
                     result = new ArrayList<>();
                 }
-                result.addAll(itemPoints);
+                result.addAll(itemIntersections);
             }
         }
 
-        // Return the list of points, or null if no intersections were found
+        // Return the list of intersections, or null if no intersections were found
         return result;
     }
 }

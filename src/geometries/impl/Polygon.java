@@ -6,6 +6,7 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+
 import static primitives.Util.isZero;
 
 /**
@@ -88,8 +89,41 @@ public class Polygon extends Geometry {
         return _plane.getNormal(point);
     }
 
+
     @Override
-    public List<Point> findIntersections(Ray ray) {
-        return null;
+    protected List<Intersection> calcIntersectionsHelper(Ray ray) {
+        // Step 1: Find intersections with the supporting plane
+        // We call the public findIntersections of the plane as per instructions
+        var planeIntersections = _plane.findIntersections(ray);
+        if (planeIntersections == null) return null;
+
+        Point p0 = ray.origin();
+        Vector v = ray.direction();
+
+        // Step 2: Check if the intersection point is inside the polygon
+        // Vector from ray origin to the first vertex
+        Vector v1 = _vertices.get(_size - 1).subtract(p0);
+        Vector v2 = _vertices.get(0).subtract(p0);
+
+        // Calculate the first normal to determine the side
+        Vector n = v1.crossProduct(v2);
+        double s1 = v.dotProduct(n);
+        if (isZero(s1)) return null;
+
+        boolean positive = s1 > 0;
+
+        // Iterate through all edges and verify they all produce the same sign
+        for (int i = 1; i < _size; i++) {
+            v1 = v2;
+            v2 = _vertices.get(i).subtract(p0);
+            n = v1.crossProduct(v2);
+            double s = v.dotProduct(n);
+
+            if (isZero(s) || (s > 0 != positive)) return null;
+        }
+
+        // Step 3: Return the intersection wrapped with the polygon (this)
+        // Even though we used the plane for calculation, the geometry must be the polygon
+        return List.of(new Intersection(this, planeIntersections.get(0)));
     }
 }
