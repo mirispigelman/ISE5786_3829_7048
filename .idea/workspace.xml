@@ -4,30 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e35a4b1d-ce71-4149-9da7-35898aef66e8" name="Changes" comment="Finish Stage 5">
-      <change afterPath="$PROJECT_DIR$/src/primitives/Material.java" afterDir="false" />
+    <list default="true" id="e35a4b1d-ce71-4149-9da7-35898aef66e8" name="Changes" comment="Finish Stage 6: Emission and Material support">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/api/Geometry.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/api/Geometry.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/api/Intersectable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/api/Intersectable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/impl/Geometries.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/impl/Geometries.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/impl/Plane.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/impl/Plane.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/impl/Polygon.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/impl/Polygon.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/impl/Sphere.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/impl/Sphere.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/impl/Triangle.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/impl/Triangle.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/impl/Tube.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/geometries/impl/Tube.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/primitives/Ray.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/primitives/Ray.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/renderer/SimpleRayTracer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/ISE5786_3829_7048/renderer/SimpleRayTracer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/api/Geometry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/api/Geometry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/api/Intersectable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/api/Intersectable.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/impl/Geometries.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/impl/Geometries.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/impl/Plane.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/impl/Plane.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/impl/Polygon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/impl/Polygon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/impl/Sphere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/impl/Sphere.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/impl/Triangle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/impl/Triangle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/geometries/impl/Tube.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/geometries/impl/Tube.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/primitives/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/primitives/Ray.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/renderer/SimpleRayTracer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/renderer/SimpleRayTracer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/unittests/geometries/impl/SphereTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/unittests/geometries/impl/SphereTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/test/ISE5786_3829_7048/geometries/impl/SphereTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/test/ISE5786_3829_7048/geometries/impl/SphereTests.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -75,39 +54,39 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "Application.Main.executor": "Run",
-    "Downloaded.Files.Path.Enabled": "false",
-    "JUnit.All in ISE5786_3829_7048.executor": "Run",
-    "JUnit.GeometriesTests.executor": "Run",
-    "JUnit.ImageWriterTests.executor": "Run",
-    "JUnit.PlaneTests.executor": "Run",
-    "JUnit.RayTests.executor": "Run",
-    "JUnit.RenderStage6Tests.executor": "Run",
-    "JUnit.RenderTests.executor": "Run",
-    "JUnit.SphereTests.executor": "Run",
-    "JUnit.TriangleTests.executor": "Run",
-    "JUnit.geometries in ISE5786_3829_7048.executor": "Run",
-    "Repository.Attach.Annotations": "false",
-    "Repository.Attach.JavaDocs": "false",
-    "Repository.Attach.Sources": "false",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;Downloaded.Files.Path.Enabled&quot;: &quot;false&quot;,
+    &quot;JUnit.All in ISE5786_3829_7048.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.GeometriesTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.ImageWriterTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.PlaneTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RayTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RenderStage6Tests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.RenderTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.SphereTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.TriangleTests.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.geometries in ISE5786_3829_7048.executor&quot;: &quot;Run&quot;,
+    &quot;Repository.Attach.Annotations&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.JavaDocs&quot;: &quot;false&quot;,
+    &quot;Repository.Attach.Sources&quot;: &quot;false&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="JUnit.All in ISE5786_3829_7048">
     <configuration name="All in ISE5786_3829_7048" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="ISE5786_3829_7048" />
@@ -218,7 +197,8 @@
       <workItem from="1778607884763" duration="267000" />
       <workItem from="1778614231396" duration="1658000" />
       <workItem from="1778686366476" duration="4909000" />
-      <workItem from="1778753085767" duration="6462000" />
+      <workItem from="1778753085767" duration="8465000" />
+      <workItem from="1779638412752" duration="1033000" />
     </task>
     <task id="LOCAL‎-00001" summary="Finish Stage 1 implementation according to new instructions">
       <option name="closed" value="true" />
@@ -308,7 +288,15 @@
       <option name="project" value="LOCAL‎" />
       <updated>1778615385299</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL‎-00012" summary="Finish Stage 6: Emission and Material support">
+      <option name="closed" value="true" />
+      <created>1778763442542</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL‎-00012" />
+      <option name="project" value="LOCAL‎" />
+      <updated>1778763442542</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -346,6 +334,7 @@
     <MESSAGE value="finish PR04" />
     <MESSAGE value="Finish Stage 5 - Basic Rendering Engine" />
     <MESSAGE value="Finish Stage 5" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finish Stage 5" />
+    <MESSAGE value="Finish Stage 6: Emission and Material support" />
+    <option name="LAST_COMMIT_MESSAGE" value="Finish Stage 6: Emission and Material support" />
   </component>
 </project>
