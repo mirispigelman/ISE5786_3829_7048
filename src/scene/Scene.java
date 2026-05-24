@@ -6,7 +6,8 @@ import primitives.Color;
 
 import java.util.LinkedList;
 import java.util.List;
-
+import lighting.LightSource;
+import java.util.ArrayList;
 /**
  * Scene class representing all components of the 3D scene.
  * This is a Passive Data Structure (PDS).
@@ -16,6 +17,7 @@ public class Scene {
     public Color background = Color.BLACK;
     public AmbientLight ambientLight = AmbientLight.NONE;
     public Geometries geometries = new Geometries();
+    public List<LightSource> lights = new ArrayList<>();
 
     /**
      * Constructor receiving only the scene name.
