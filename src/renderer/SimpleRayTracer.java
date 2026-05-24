@@ -35,7 +35,7 @@ class SimpleRayTracer extends RayTracerBase {
 
         // 4. Preprocess the geometric fields using the ray's public direction() method
         // Using explicit primitives.Vector to bypass package/import mismatches
-        if (!preprocessIntersection(closestIntersection, (primitives.Vector) ray.direction())) {
+        if (!preprocessIntersection(closestIntersection, ray.direction())) {
             return _scene.ambientLight.getIntensity();
         }
 
@@ -51,9 +51,8 @@ class SimpleRayTracer extends RayTracerBase {
      */
     public Color calcColor(Intersection intersection) {
         // Sum up: Ambient Light + Emission Light + Local Effects (Diffuse + Specular)
-        return _scene.ambientLight.getIntensity()
-                .add(intersection.geometry.getEmission())
-                .add(calcLocalEffects(intersection));
+        return  _scene.ambientLight.getIntensity().scale(intersection.material.kA) //
+                .add(calcLocalEffects(intersection)); //
     }
 
     /**
@@ -62,18 +61,15 @@ class SimpleRayTracer extends RayTracerBase {
      * @return the total accumulated color from local light sources
      */
     private Color calcLocalEffects(Intersection intersection) {
-        Color color = Color.BLACK;
+        // נקודת ההתחלה היא צבע הפליטה העצמי של הגוף (במקום BLACK)
+        Color color = intersection.geometry.getEmission();
 
-        // Loop through all external light sources in the scene [cite: 57]
+        // לולאה על כל מקורות האור בשטח
         for (LightSource lightSource : _scene.lights) {
-
-            // Execute preprocessing for the current light source (checks side consistency and caches variables) [cite: 52]
             if (preprocessLightSource(intersection, lightSource)) {
-
-                // Get the continuous light intensity at the intersection point (including distance attenuation)
                 Color lightIntensity = lightSource.getIntensity(intersection.point);
 
-                // Accumulate: color + I_L * (calcDiffuse + calcSpecular) [cite: 62]
+                // הוספת האפקטים מעל צבע הבסיס
                 color = color.add(lightIntensity.scale(
                         calcDiffuse(intersection).add(calcSpecular(intersection))
                 ));

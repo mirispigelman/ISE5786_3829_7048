@@ -5,6 +5,7 @@ import primitives.Ray;
 import geometries.api.Intersectable.Intersection; // Required to access the static nested Intersection class
 import lighting.LightSource; // Required for the LightSource interface
 import scene.Scene;
+import primitives.Vector; 
 /**
  * Base class for all ray tracers.
  * This class is immutable.

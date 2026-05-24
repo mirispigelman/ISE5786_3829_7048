@@ -23,7 +23,6 @@ class SpotLightTests {
     @Test
     void testGetIntensity() {
         Point lightPos = new Point(0, 0, 0);
-        // זרקור שמכוון לכיוון Z שלילי
         SpotLight light = new SpotLight(new Color(100, 100, 100), lightPos, new Vector(0, 0, -1));
 
         // EP: Point is directly in front of the spotlight beam

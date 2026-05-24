@@ -9,20 +9,20 @@ public class Material {
     public Double3 kA = Double3.ONE;
 
     /** Diffuse attenuation coefficient for Phong Model */
-    public Double3 kD = Double3.ZERO; // סעיף א'+ב': הוספת שדה ואתחולו ל-Double3.ZERO
+    public Double3 kD = Double3.ZERO;
 
     /** Specular attenuation coefficient for Phong Model */
-    public Double3 kS = Double3.ZERO; // סעיף א'+ב': הוספת שדה ואתחולו ל-Double3.ZERO
+    public Double3 kS = Double3.ZERO;
 
     /** Shininess exponent factor for specular concentration */
-    public int nShininess = 0;        // סעיף א'+ב': הוספת שדה ואתחולו ל-0
+    public int nShininess = 0;
 
     /**
      * Setter for kA using Double3
      * @param kA attenuation coefficient
      * @return this material object for chaining
      */
-    public Material setKA(Double3 kA) {
+    public Material setKa(Double3 kA) {
         this.kA = kA;
         return this;
     }
@@ -32,7 +32,7 @@ public class Material {
      * @param kA attenuation coefficient
      * @return this material object for chaining
      */
-    public Material setKA(double kA) {
+    public Material setKa(double kA) {
         this.kA = new Double3(kA);
         return this;
     }
@@ -42,7 +42,7 @@ public class Material {
      * @param kD attenuation coefficient
      * @return this material object for chaining
      */
-    public Material setKD(Double3 kD) { // סעיף ד': מתודה מעדכנת משתרשרת (Double3) מותאמת לטסט
+    public Material setKD(Double3 kD) {
         this.kD = kD;
         return this;
     }
@@ -52,7 +52,7 @@ public class Material {
      * @param kD attenuation coefficient as a double
      * @return this material object for chaining
      */
-    public Material setKD(double kD) { // סעיף ד': מתודה מעדכנת משתרשרת (double) מותאמת לטסט
+    public Material setKD(double kD) {
         this.kD = new Double3(kD);
         return this;
     }
@@ -62,7 +62,7 @@ public class Material {
      * @param kS attenuation coefficient
      * @return this material object for chaining
      */
-    public Material setKS(Double3 kS) { // סעיף ד': מתודה מעדכנת משתרשרת (Double3) מותאמת לטסט
+    public Material setKS(Double3 kS) {
         this.kS = kS;
         return this;
     }
@@ -72,7 +72,7 @@ public class Material {
      * @param kS attenuation coefficient as a double
      * @return this material object for chaining
      */
-    public Material setKS(double kS) { // סעיף ד': מתודה מעדכנת משתרשרת (double) מותאמת לטסט
+    public Material setKS(double kS) {
         this.kS = new Double3(kS);
         return this;
     }
@@ -82,7 +82,7 @@ public class Material {
      * @param nShininess shininess factor
      * @return this material object for chaining
      */
-    public Material setShininess(int nShininess) { // סעיף ה': מתודה מעדכנת משתרשרת עבור nShininess
+    public Material setShininess(int nShininess) {
         this.nShininess = nShininess;
         return this;
     }

@@ -10,10 +10,9 @@ import primitives.Vector;
  */
 public class PointLight extends Light implements LightSource {
 
-    // השדה מוגדר כ-private final בדיוק לפי דרישות סעיף 5 א'
     private final Point _position;
 
-    private double _kC = 1; // אתחול בשורת ההגדרה לפי סעיף 7 ב'
+    private double _kC = 1;
     private double _kL = 0;
     private double _kQ = 0;
 
@@ -44,7 +43,7 @@ public class PointLight extends Light implements LightSource {
 
     @Override
     public Vector getL(Point p) {
-        // החזרת וקטור מנורמל מהמיקום הפרטי אל הנקודה p
+
         return p.subtract(_position).normalize();
     }
 
@@ -54,7 +53,6 @@ public class PointLight extends Light implements LightSource {
         double d = _position.distance(p);
         double factor = _kC + _kL * d + _kQ * d * d;
 
-        // על פי ההנחיות: שימוש ב-scale עם ההופכי של הפקטור
         return _intensity.scale(1.0 / factor);
     }
 }

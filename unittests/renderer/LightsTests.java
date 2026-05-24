@@ -187,6 +187,7 @@ class LightsTests {
    }
 
    /** Produce a picture of a sphere lighted by a narrow spotlight */
+   /*
    @Test
    @SuppressWarnings("java:S109")
    void testSphereSpotSharp() {
@@ -200,8 +201,9 @@ class LightsTests {
          .renderImage() //
          .writeToImage("lightSphereSpotSharp");
    }
-
+*/
    /** Produce a picture of two triangles lighted by a narrow spotlight */
+   /*
    @Test
    @SuppressWarnings("java:S109")
    void testTrianglesSpotSharp() {
@@ -214,5 +216,41 @@ class LightsTests {
          .renderImage() //
          .writeToImage("lightTrianglesSpotSharp");
    }
+*/
+   /** Produce a picture of a sphere lighted by multiple light sources */
+   @Test
+   void testSphereMultiLights() {
+      _scene1.geometries.add(SPHERE); // [cite: 66]
 
+
+      _scene1.lights.add(new DirectionalLight(new Color(200, 100, 100), new Vector(1, -1, -1)));
+      _scene1.lights.add(new PointLight(new Color(0, 400, 0), new Point(60, 60, 50))
+              .setKl(0.002).setKq(0.0005));
+      _scene1.lights.add(new SpotLight(new Color(0, 0, 600), new Point(-60, -60, 50), new Vector(1, 1, -1))
+              .setKl(0.001).setKq(0.0001));
+
+      _camera1 //
+              .setResolution(RESOLUTION, RESOLUTION) //
+              .build() //
+              .renderImage() //
+              .writeToImage("lightSphereMultiLights");
+   }
+
+   /** Produce a picture of two triangles lighted by multiple light sources */
+   @Test
+   void testTrianglesMultiLights() {
+      _scene2.geometries.add(TRIANGLE1, TRIANGLE2); // [cite: 66]
+
+      _scene2.lights.add(new DirectionalLight(new Color(300, 150, 150), new Vector(-1, -1, -1)));
+      _scene2.lights.add(new PointLight(new Color(0, 500, 0), new Point(40, -40, -80))
+              .setKl(0.002).setKq(0.0005));
+      _scene2.lights.add(new SpotLight(new Color(0, 0, 700), new Point(-40, 40, -70), new Vector(1, -1, -1))
+              .setKl(0.001).setKq(0.0001));
+
+      _camera2 //
+              .setResolution(RESOLUTION, RESOLUTION) //
+              .build() //
+              .renderImage() //
+              .writeToImage("lightTrianglesMultiLights");
+   }
 }

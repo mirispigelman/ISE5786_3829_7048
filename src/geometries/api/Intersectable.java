@@ -2,9 +2,9 @@ package geometries.api;
 
 import primitives.Point;
 import primitives.Ray;
-import primitives.Vector; // חובה לייבא את וקטור עבור שדות ה-Cache החדשים
+import primitives.Vector;
 import primitives.Material;
-import lighting.LightSource; // חובה לייבא את ממשק מקור האור עבור שדות ה-Cache החדשים
+import lighting.LightSource;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,15 +26,13 @@ public abstract class Intersectable {
         public final Point point;
         public final Material material;
 
-        // =================================================================
-        // שדות עזר מחושבים (Cache) עבור חישובי תאורה - שלב 7 חלק ב' [cite: 1114]
-        // =================================================================
-        public Vector normal;     // וקטור הנורמל בנקודת הפגיעה [cite: 937, 950]
-        public Vector v;          // כיוון הקרן הפוגעת [cite: 938, 950]
-        public double vNormal;    // המכפלה הסקלרית בין v לבין הנורמל [cite: 939, 951]
-        public LightSource light; // מקור האור הפעיל כרגע [cite: 940, 951]
-        public Vector l;          // כיוון האור ממקור האור לנקודה [cite: 941, 952]
-        public double lNormal;    // המכפלה הסקלרית בין l לבין הנורמל [cite: 942, 952]
+
+        public Vector normal;
+        public Vector v;
+        public double vNormal;
+        public LightSource light;
+        public Vector l;
+        public double lNormal;
 
         /**
          * Constructor for Intersection

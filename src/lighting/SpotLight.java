@@ -20,10 +20,10 @@ public class SpotLight extends PointLight {
      */
     public SpotLight(Color intensity, Point position, Vector direction) {
         super(intensity, position);
-        this._direction = direction.normalize(); // נרמול וקטור הכיוון לפני שמירתו [cite: 490]
+        this._direction = direction.normalize();
     }
 
-    // דריסת מתודות העדכון המשרשרות של מחלקת האב (סעיף ה') [cite: 502]
+
     @Override
     public SpotLight setKc(double kC) {
         super.setKc(kC);
@@ -42,28 +42,23 @@ public class SpotLight extends PointLight {
         return this;
     }
 
-    // ==========================================
-    // מימוש מתודות הממשק LightSource (סעיף ו')
-    // ==========================================
+
 
     @Override
     public Vector getL(Point p) {
-        // מפעיל את getL של מחלקת האב PointLight שמחשבת ומחזירה
-        // וקטור מנורמל ממיקום מקור האור אל הנקודה p
+
         return super.getL(p);
     }
 
     @Override
     public Color getIntensity(Point p) {
-        Vector l = getL(p); // וקטור כיוון האור לנקודה p [cite: 486]
-        double cosFactor = _direction.dotProduct(l); // המכפלה הסקלרית בין כיוון הזרקור לכיוון האור לנקודה [cite: 656]
+        Vector l = getL(p);
+        double cosFactor = _direction.dotProduct(l);
 
-        // אם הזווית גדולה מ-90 מעלות, הנקודה נמצאת מאחורי או מחוץ לאלומת הזרקור [cite: 656, 899, 900]
         if (cosFactor <= 0) {
             return Color.BLACK;
         }
 
-        // חישוב עוצמת האור הנקודתית (כולל דעיכת מרחק) והכפלתה ברכיב הזוויתי של הספוט [cite: 656]
         return super.getIntensity(p).scale(cosFactor);
     }
 }
