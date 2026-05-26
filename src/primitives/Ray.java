@@ -22,6 +22,7 @@ public class Ray {
      */
     private final Vector _direction;
 
+    private static final double DELTA = 0.1;
     /**
      * Constructor for Ray.
      * The direction vector is normalized automatically.
@@ -29,6 +30,23 @@ public class Ray {
      * @param origin    the starting point
      * @param direction the direction vector
      */
+
+    /**
+     * Constructor for Ray that automatically shifts the ray head along the normal
+     * to avoid self-shading and self-intersection bugs.
+     * @param point original intersection point
+     * @param direction direction vector of the new ray
+     * @param normal normal vector of the geometry at the intersection point
+     */
+    public Ray(Point point, Vector direction, Vector normal) {
+        // Calculate the dot product between the normal and the ray direction
+        double nv = normal.dotProduct(direction);
+
+        // Shift the point along the normal by DELTA or -DELTA based on the sign of nv
+        Vector deltaVector = normal.scale(nv > 0 ? DELTA : -DELTA);
+        this._origin = point.add(deltaVector);
+        this._direction = direction.normalize();
+    }
     public Ray(Point origin, Vector direction) {
         _origin = origin;
         _direction = direction.normalize();

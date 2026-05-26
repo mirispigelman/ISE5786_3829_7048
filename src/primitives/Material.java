@@ -17,6 +17,11 @@ public class Material {
     /** Shininess exponent factor for specular concentration */
     public int nShininess = 0;
 
+    /** Transmittance factor (0 = opaque, 1 = fully transparent) */
+    public Double3 kT = Double3.ZERO;
+
+    /** Reflection factor (0 = matte, 1 = fully specular mirror) */
+    public Double3 kR = Double3.ZERO;
     /**
      * Setter for kA using Double3
      * @param kA attenuation coefficient
@@ -84,6 +89,45 @@ public class Material {
      */
     public Material setShininess(int nShininess) {
         this.nShininess = nShininess;
+        return this;
+    }
+    /**
+     * Setter for kT using Double3 value.
+     * @param kT transmittance factor
+     * @return the material object itself
+     */
+    public Material setKT(Double3 kT) {
+        this.kT = kT;
+        return this;
+    }
+
+    /**
+     * Setter for kT using a double value.
+     * @param kT transmittance factor
+     * @return the material object itself
+     */
+    public Material setKT(double kT) {
+        this.kT = new Double3(kT);
+        return this;
+    }
+
+    /**
+     * Setter for kR using Double3 value.
+     * @param kR reflection factor
+     * @return the material object itself
+     */
+    public Material setKR(Double3 kR) {
+        this.kR = kR;
+        return this;
+    }
+
+    /**
+     * Setter for kR using a double value.
+     * @param kR reflection factor
+     * @return the material object itself
+     */
+    public Material setKR(double kR) {
+        this.kR = new Double3(kR);
         return this;
     }
 }
