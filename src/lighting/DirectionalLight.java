@@ -31,4 +31,9 @@ public class DirectionalLight extends Light implements LightSource {
     public Color getIntensity(Point p) {
         return _intensity;
     }
+    @Override
+    public double getDistance(Point point) {
+        // Directional light has no finite distance, so return positive infinity
+        return Double.POSITIVE_INFINITY;
+    }
 }

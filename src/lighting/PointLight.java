@@ -55,4 +55,9 @@ public class PointLight extends Light implements LightSource {
 
         return _intensity.scale(1.0 / factor);
     }
+    @Override
+    public double getDistance(Point point) {
+        // Calculate geometric distance from the light source position to the given point
+        return _position.distance(point);
+    }
 }

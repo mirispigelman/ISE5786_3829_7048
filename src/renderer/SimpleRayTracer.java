@@ -6,12 +6,58 @@ import primitives.Color;
 import primitives.Double3;
 import primitives.Ray;
 import scene.Scene;
+import primitives.Vector;
+import primitives.Point;
+import primitives.Ray;
 
 /**
  * Basic implementation of a ray tracer.
  */
 class SimpleRayTracer extends RayTracerBase {
+    private static final double DELTA = 0.1;
 
+    /**
+     * Checks if a point is unshaded (has light visibility) from a specific light source.
+     * @param intersection the intersection point context
+     * @return true if unshaded, false if shaded
+     */
+    private boolean unshaded(Intersection intersection, lighting.LightSource lightSource) {
+        // 1. Calculate shadow ray direction (opposite to light vector l)
+        Vector pointToLight = intersection.l.scale(-1);
+
+        // 2. Shift the ray head along the normal to avoid self-shadowing
+        double sign = intersection.lNormal > 0 ? DELTA : -DELTA;
+        Vector deltaVector = intersection.normal.scale(intersection.lNormal > 0 ? -DELTA : DELTA);
+        Point rayHead = intersection.point.add(deltaVector);
+
+        // 3. Construct the shadow ray
+        Ray shadowRay = new Ray(rayHead, pointToLight);
+
+        // 4. Find all intersections along the shadow ray
+        var shadowIntersections = _scene.geometries.findIntersections(shadowRay);
+
+        // If no intersections are found, the point is completely unshaded
+        if (shadowIntersections == null) {
+            return true;
+        }
+
+        // 5. Get the distance from the intersection point to the light source using the parameter
+        double lightDistance = lightSource.getDistance(intersection.point);
+
+        // 6. Loop over shadow intersections and filter by distance
+        for (Point geoIntersection : shadowIntersections) {
+            // Since geoIntersection is already a Point object, we pass it directly
+            double distance = rayHead.distance(geoIntersection);
+
+            // If the obstacle is closer than the light source, it blocks the light
+            if (distance < lightDistance) {
+                return false;
+            }
+        }
+
+        // If all obstacles are further away than the light source, it's unshaded
+        return true;
+    }
     /**
      * Constructor.
      * @param scene the scene
@@ -61,15 +107,16 @@ class SimpleRayTracer extends RayTracerBase {
      * @return the total accumulated color from local light sources
      */
     private Color calcLocalEffects(Intersection intersection) {
-        // נקודת ההתחלה היא צבע הפליטה העצמי של הגוף (במקום BLACK)
+        // Start with the emission color of the geometry
         Color color = intersection.geometry.getEmission();
 
-        // לולאה על כל מקורות האור בשטח
+        // Loop through all the light sources in the scene
         for (LightSource lightSource : _scene.lights) {
-            if (preprocessLightSource(intersection, lightSource)) {
+            // 1.ג + 1.ד: Add the unshaded check to verify there's no obstacle between the point and the light
+            if (preprocessLightSource(intersection, lightSource) && unshaded(intersection, lightSource)) {
                 Color lightIntensity = lightSource.getIntensity(intersection.point);
 
-                // הוספת האפקטים מעל צבע הבסיס
+                // Add diffusive and specular light effects only if unshaded
                 color = color.add(lightIntensity.scale(
                         calcDiffuse(intersection).add(calcSpecular(intersection))
                 ));
