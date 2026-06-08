@@ -145,4 +145,68 @@ public class Ray {
         }
         return closest;
     }
+    /**
+     * Generates a beam of rays from this ray's origin towards a target area (Blackboard).
+     * This infrastructure supports super-sampling features like Soft Shadows and Glossy Surfaces.
+     * * @param blackboard the 2D sampling blackboard configuration
+     * @param distance the distance from the ray's origin to the target area plane
+     * @return a list of rays forming the beam
+     */
+    public java.util.List<Ray> generateBeam(Blackboard blackboard, double distance) {
+        java.util.List<Ray> beam = new java.util.ArrayList<>();
+
+        // 1. Get the 2D sample offsets from the blackboard configuration
+        java.util.List<Point2D> samples2D = blackboard.generate2DSamples();
+
+        // 2. If the blackboard returns only the center point (feature off), return this single ray
+        if (samples2D.size() <= 1) {
+            beam.add(this);
+            return beam;
+        }
+
+        // 3. Calculate the central target point on the target plane
+        // TargetPoint = p0 + distance * dir
+        Point targetCenter = this.getPoint(distance);
+
+        // 4. Construct an orthonormal basis (local X and Y axes) for the target plane
+        // Vector vX must be orthogonal to the ray's direction (_direction)
+        Vector vX;
+        double x = this._direction._xyz._d1();
+        double y = this._direction._xyz._d2();
+
+        // Avoid cross product with a parallel vector by checking components
+        if (Util.isZero(x) && Util.isZero(y)) {
+            vX = new Vector(1, 0, 0); // Ray points along Z axis, pick X axis
+        } else {
+            vX = new Vector(-y, x, 0).normalize(); // General orthogonal vector in XY plane
+        }
+
+        // Vector vY is orthogonal to both _direction and vX
+        Vector vY = this._direction.crossProduct(vX).normalize();
+        // 5. Map each 2D sample point to a 3D target point and construct the ray
+        for (Point2D sample : samples2D) {
+            double sX = sample.getX();
+            double sY = sample.getY();
+
+            Point targetPoint = targetCenter;
+
+            // Move the target point along the local X axis if the offset is not zero
+            if (!Util.isZero(sX)) {
+                targetPoint = targetPoint.add(vX.scale(sX));
+            }
+            // Move the target point along the local Y axis if the offset is not zero
+            if (!Util.isZero(sY)) {
+                targetPoint = targetPoint.add(vY.scale(sY));
+            }
+
+            // Create a new ray from the original source pointing towards the 3D target point
+            // Direction = TargetPoint - p0
+            Vector beamDir = targetPoint.subtract(this._origin);
+
+            // Ensure we don't automatically include the central ray unless it is part of the pattern
+            beam.add(new Ray(this._origin, beamDir));
+        }
+
+        return beam;
+    }
 }
