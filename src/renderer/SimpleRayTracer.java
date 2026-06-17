@@ -18,6 +18,7 @@ class SimpleRayTracer extends RayTracerBase {
     private static final int MAX_CALC_COLOR_LEVEL = 10;
     private static final double MIN_CALC_COLOR_K = 0.001;
     private static final Double3 INITIAL_K = Double3.ONE;
+    private static final double TARGET_PLANE_DISTANCE = 100.0;
     /**
      * Checks if a point is unshaded (has light visibility) from a specific light source.
      * @param intersection the intersection point context
@@ -281,7 +282,11 @@ class SimpleRayTracer extends RayTracerBase {
      * @param kx the attenuation factor of the current geometry (kT or kR)
      * @return the calculated color component for this global effect
      */
-    private Color calcGlobalEffect(Ray ray, int level, Double3 k, Double3 kx) {
+    /**
+     * Calculates global lighting effects (reflection/refraction) supporting
+     * super-sampling beams for glossy surfaces and diffuse glass.
+     */
+    private Color calcGlobalEffect(Ray ray, int level, Double3 k, Double3 kx, Double3 blurFactor, int samplesCount) {
         // 1. Calculate the cumulative attenuation factor for the next step
         Double3 kkx = k.product(kx);
 
@@ -290,24 +295,46 @@ class SimpleRayTracer extends RayTracerBase {
             return Color.BLACK;
         }
 
-        // 3. Find all intersections along the secondary ray
-        var intersections = _scene.geometries.calcIntersections(ray);
-
-        // If no intersections are found, return the background color multiplied by kx
-        if (intersections == null) {
-            return _scene.background.scale(kx);
+        // 3. Feature Off Optimization: If no blur or single sample, trace exactly 1 ray
+        if (blurFactor.equals(Double3.ZERO) || samplesCount <= 1) {
+            var intersections = _scene.geometries.calcIntersections(ray);
+            if (intersections == null) {
+                return _scene.background.scale(kx);
+            }
+            var closestIntersection = ray.findClosestIntersection(intersections);
+            if (!preprocessIntersection(closestIntersection, ray.direction())) {
+                return Color.BLACK;
+            }
+            return calcColor(closestIntersection, level - 1, kkx).scale(kx);
         }
 
-        // 4. Find the closest intersection point
-        var closestIntersection = ray.findClosestIntersection(intersections);
+        // 4. Super-Sampling Beam Logic: Configure the blackboard for blurry effects
+        double sizeRadius = blurFactor._d1() * TARGET_PLANE_DISTANCE;
+        primitives.Blackboard blackboard = new primitives.Blackboard()
+                .setSize(sizeRadius)
+                .setSamplesCount(samplesCount)
+                .setShape(primitives.SampleShape.CIRCLE) // Circular target area prevents directional distortions
+                .setPattern(primitives.SamplePattern.JITTERED); // Jittered layout yields realistic smooth blur
 
-        // 5. Preprocess fields and compute color recursively
-        if (!preprocessIntersection(closestIntersection, ray.direction())) {
-            return Color.BLACK; // Tangent ray, no color contribution
+        // Generate the 3D ray beam from our generic core infrastructure
+        java.util.List<Ray> beam = ray.generateBeam(blackboard, TARGET_PLANE_DISTANCE);
+        Color colorSum = Color.BLACK;
+
+        // 5. Trace each recursive ray in the beam individually
+        for (Ray beamRay : beam) {
+            var intersections = _scene.geometries.calcIntersections(beamRay);
+            if (intersections == null) {
+                colorSum = colorSum.add(_scene.background);
+            } else {
+                var closestIntersection = beamRay.findClosestIntersection(intersections);
+                if (preprocessIntersection(closestIntersection, beamRay.direction())) {
+                    colorSum = colorSum.add(calcColor(closestIntersection, level - 1, kkx));
+                }
+            }
         }
 
-        // Calculate the color at the closest intersection point and multiply by the geometry's factor
-        return calcColor(closestIntersection, level - 1, kkx).scale(kx);
+        // 6. Average the accumulated beam light and scale by the geometry's attenuation factor
+        return colorSum.reduce(beam.size()).scale(kx);
     }
     /**
      * Combines both global effects (reflection and refraction) for an intersection point.
@@ -316,17 +343,20 @@ class SimpleRayTracer extends RayTracerBase {
      * @param k cumulative attenuation factor
      * @return the total accumulated color from both global effects
      */
+    /**
+     * Combines both global effects (reflection and refraction) supporting glossy and diffuse glass beams.
+     */
     private Color calcGlobalEffects(Intersection intersection, int level, Double3 k) {
         Color color = Color.BLACK;
         var material = intersection.material;
 
-        // 1. Calculate Reflected Light Component (Mirror effect)
+        // 1. Calculate Reflected Light Component (Glossy Mirror effect)
         Ray reflectedRay = constructReflectedRay(intersection);
-        color = color.add(calcGlobalEffect(reflectedRay, level, k, material.kR));
+        color = color.add(calcGlobalEffect(reflectedRay, level, k, material.kR, material.kG, material.materialSamples));
 
-        // 2. Calculate Refracted Light Component (Transparency effect)
+        // 2. Calculate Refracted Light Component (Diffuse Blurry Glass effect)
         Ray refractedRay = constructRefractedRay(intersection);
-        color = color.add(calcGlobalEffect(refractedRay, level, k, material.kT));
+        color = color.add(calcGlobalEffect(refractedRay, level, k, material.kT, material.kDG, material.materialSamples));
 
         return color;
     }

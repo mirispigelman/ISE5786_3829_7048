@@ -22,6 +22,15 @@ public class Material {
 
     /** Reflection factor (0 = matte, 1 = fully specular mirror) */
     public Double3 kR = Double3.ZERO;
+
+    /** Blur parameter for glossy reflections (0 = perfect mirror) */
+    public Double3 kG = Double3.ZERO;
+
+    /** Blur parameter for diffuse glass transparency (0 = crystal clear glass) */
+    public Double3 kDG = Double3.ZERO;
+
+    /** Number of sample rays to use for this material's blurry effects */
+    public int materialSamples = 1;
     /**
      * Setter for kA using Double3
      * @param kA attenuation coefficient
@@ -130,5 +139,56 @@ public class Material {
         this.kR = new Double3(kR);
         return this;
     }
+    /**
+     * Setter for kG using Double3 value for glossy reflections.
+     * @param kG glossy reflection factor
+     * @return the material object itself
+     */
+    public Material setKG(Double3 kG) {
+        this.kG = kG;
+        return this;
+    }
+
+    /**
+     * Setter for kG using a double value for glossy reflections.
+     * @param kG glossy reflection factor
+     * @return the material object itself
+     */
+    public Material setKG(double kG) {
+        this.kG = new Double3(kG);
+        return this;
+    }
+
+    /**
+     * Setter for kDG using Double3 value for diffuse glass transparency.
+     * @param kDG diffuse glass factor
+     * @return the material object itself
+     */
+    public Material setKDG(Double3 kDG) {
+        this.kDG = kDG;
+        return this;
+    }
+
+    /**
+     * Setter for kDG using a double value for diffuse glass transparency.
+     * @param kDG diffuse glass factor
+     * @return the material object itself
+     */
+    public Material setKDG(double kDG) {
+        this.kDG = new Double3(kDG);
+        return this;
+    }
+
+    /**
+     * Setter for the number of sample rays used for super-sampling on this material.
+     * @param materialSamples total number of samples (> 0)
+     * @return the material object itself for chaining
+     */
+    public Material setMaterialSamples(int materialSamples) {
+        if (materialSamples <= 0) throw new IllegalArgumentException("Material samples must be greater than 0");
+        this.materialSamples = materialSamples;
+        return this;
+    }
+
 }
 
