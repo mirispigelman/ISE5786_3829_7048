@@ -1,6 +1,8 @@
 package renderer;
 
+import java.util.LinkedList;
 import java.util.MissingResourceException;
+import java.util.stream.IntStream;
 import primitives.Color;
 import primitives.Point;
 import primitives.Ray;
@@ -38,6 +40,12 @@ public class Camera implements Cloneable {
     // Stage 5 fields
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
+
+    // --- שדות חדשים עבור ריבוי תהליכונים והדפסות התקדמות ---
+    private int threadsCount = 0;
+    private static final int SPARE_THREADS = 2;
+    private double printInterval = 0;
+    private PixelManager pixelManager;
 
     /**
      * Static method to get a new Builder instance
@@ -77,15 +85,30 @@ public class Camera implements Cloneable {
     }
 
     /**
-     * Renders the image by iterating over all pixels and casting rays[cite: 3].
+     * Renders the image by dynamically choosing the optimal threading strategy.
      * @return the camera object
      */
     public Camera renderImage() {
         if (imageWriter == null) throw new MissingResourceException("Missing image writer", "Camera", "imageWriter");
         if (rayTracer == null) throw new MissingResourceException("Missing ray tracer", "Camera", "rayTracer");
 
-        for (int i = 0; i < nY; i++) {
-            for (int j = 0; j < nX; j++) {
+        // אתחול מנהל הפיקסלים
+        pixelManager = new PixelManager(nY, nX, printInterval);
+
+        // בחירת אסטרטגיית הריצה בהתאם לערך השדה threadsCount
+        return switch (threadsCount) {
+            case 0 -> renderImageNoThreads();
+            case -1 -> renderImageStream();
+            default -> renderImageRawThreads();
+        };
+    }
+
+    /**
+     * רינדור ללא ריבוי תהליכונים
+     */
+    private Camera renderImageNoThreads() {
+        for (int i = 0; i < nY; ++i) {
+            for (int j = 0; j < nX; ++j) {
                 castRay(nX, nY, j, i);
             }
         }
@@ -93,16 +116,54 @@ public class Camera implements Cloneable {
     }
 
     /**
-     * Casts a ray through a single pixel and writes its color to the image[cite: 3].
+     * רינדור באמצעות הזרמה מקבילית Parallel Stream
+     */
+    private Camera renderImageStream() {
+        IntStream.range(0, nY).parallel()
+                .forEach(i -> IntStream.range(0, nX).parallel()
+                        .forEach(j -> castRay(nX, nY, j, i)));
+        return this;
+    }
+
+    /**
+     * רינדור באמצעות יצירה והרצה של תהליכונים גולמיים ומנהל הפיקסלים
+     */
+    private Camera renderImageRawThreads() {
+        var threads = new LinkedList<Thread>();
+        int currentThreads = threadsCount;
+        while (currentThreads-- > 0) {
+            threads.add(new Thread(() -> {
+                PixelManager.Pixel pixel;
+                while ((pixel = pixelManager.nextPixel()) != null) {
+                    castRay(nX, nY, pixel.col(), pixel.row());
+                }
+            }));
+        }
+
+        for (var thread : threads) thread.start();
+
+        try {
+            for (var thread : threads) thread.join();
+        } catch (InterruptedException ignored) {}
+
+        return this;
+    }
+
+    /**
+     * Casts a ray through a single pixel and writes its color to the image.
      */
     private void castRay(int nX, int nY, int j, int i) {
         Ray ray = constructRay(nX, nY, j, i);
         Color color = rayTracer.traceRay(ray);
         imageWriter.writePixel(j, i, color);
+
+        if (pixelManager != null) {
+            pixelManager.pixelDone();
+        }
     }
 
     /**
-     * Prints a grid on the image for testing purposes[cite: 3].
+     * Prints a grid on the image for testing purposes.
      * @param interval grid square size
      * @param color grid line color
      * @return the camera object
@@ -121,7 +182,7 @@ public class Camera implements Cloneable {
     }
 
     /**
-     * Delegates the image writing to ImageWriter[cite: 3].
+     * Delegates the image writing to ImageWriter.
      * @param fileName output file name
      */
     public void writeToImage(String fileName) {
@@ -177,15 +238,27 @@ public class Camera implements Cloneable {
             return this;
         }
 
-        /**
-         * Configures the ray tracer for the camera[cite: 3].
-         * @param scene the scene to render
-         * @param type ray tracer strategy
-         * @return builder object
-         */
+        public Builder setMultithreading(int threads) {
+            if (threads < -3)
+                throw new IllegalArgumentException("Multithreading parameter must be -2 or higher");
+            if (threads == 2) {
+                int cores = Runtime.getRuntime().availableProcessors() - SPARE_THREADS;
+                _camera.threadsCount = cores <= 2 ? 1 : cores;
+            } else {
+                _camera.threadsCount = threads;
+            }
+            return this;
+        }
+
+        public Builder setDebugPrint(double interval) {
+            if (interval < 0) throw new IllegalArgumentException("interval parameter must be non-negative");
+            _camera.printInterval = interval;
+            return this;
+        }
+
         public Builder setRayTracer(Scene scene, RayTracerType type) {
             if (type == RayTracerType.SIMPLE) {
-                _camera.rayTracer = new SimpleRayTracer(scene); // Here is the line
+                _camera.rayTracer = new SimpleRayTracer(scene);
             } else {
                 throw new IllegalArgumentException("Unsupported ray tracer type");
             }
@@ -195,7 +268,6 @@ public class Camera implements Cloneable {
         private void checkResolution() {
             if (_camera.nX <= 0 || _camera.nY <= 0)
                 throw new IllegalArgumentException("Resolution must be positive");
-            // Initialize imageWriter after resolution is confirmed[cite: 3]
             _camera.imageWriter = new ImageWriter(_camera.nX, _camera.nY);
         }
 
@@ -204,7 +276,6 @@ public class Camera implements Cloneable {
             checkLocationAndDirection();
             checkViewPlane();
 
-            // Default ray tracer initialization if missing[cite: 3]
             if (_camera.rayTracer == null) {
                 setRayTracer(new Scene("test"), RayTracerType.SIMPLE);
             }

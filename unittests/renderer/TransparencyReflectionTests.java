@@ -11,7 +11,9 @@ import static java.awt.Color.*;
 
 /**
  * Official Comprehensive Showcase Test for Glossy Surfaces & Diffuse Glass.
+ * <p>
  * Meets 100% of the project guidelines (11 shapes, 3 lights, performance logs, 2 output files).
+ * Fully utilizes the new Camera multi-threading features.
  */
 public class TransparencyReflectionTests {
 
@@ -25,8 +27,8 @@ public class TransparencyReflectionTests {
         Material targetMat = new Material().setKD(0.5).setKS(0.5).setShininess(50);
         Material floorMat = new Material().setKa(0.5).setKD(0.4);
 
-        // Define number of rays: 36 samples when blurred (ON), 1 ray when sharp (OFF)
-        int samples = enableBlur ? 9 : 1;
+        // Define number of rays: 9 samples when blurred (ON), 1 ray when sharp (OFF)
+        int samples = enableBlur ? 36 : 1;
 
         // Define Showcase Materials (Left to Right)
         Material sharpMirror = new Material().setKD(0.1).setKS(0.8).setShininess(100).setKR(0.9).setKG(0.0);
@@ -44,19 +46,19 @@ public class TransparencyReflectionTests {
 
                 // --- 5 כדורי מטרה צבעוניים מאחור (גופים 3 עד 7) ---
                 // ממוקמים מאחור כדי שישתקפו במראות או ייראו מבעד לזכוכיות
-                new Sphere(new Point(-45, 20, -70), 10).setMaterial(targetMat).setEmission(new Color(180, 30, 30)),   // אדום
-                new Sphere(new Point(-18, 20, -70), 10).setMaterial(targetMat).setEmission(new Color(30, 30, 180)),   // כחול
-                new Sphere(new Point(10, 20, -70), 10).setMaterial(targetMat).setEmission(new Color(30, 180, 30)),    // ירוק
-                new Sphere(new Point(38, 20, -70), 10).setMaterial(targetMat).setEmission(new Color(180, 180, 30)),  // צהוב
-                new Sphere(new Point(65, 20, -70), 10).setMaterial(targetMat).setEmission(new Color(180, 30, 180)),  // מג'נטה
+                new Sphere(new Point(-45, 20, -70), 10).setMaterial(targetMat).setEmission(new Color(180, 30, 30)), // אדום
+                new Sphere(new Point(-18, 15, -70), 10).setMaterial(targetMat).setEmission(new Color(30, 30, 180)), // כחול
+                new Sphere(new Point(10, 10, -70), 10).setMaterial(targetMat).setEmission(new Color(30, 180, 30)), // ירוק
+                new Sphere(new Point(38, 5, -70), 10).setMaterial(targetMat).setEmission(new Color(180, 180, 30)), // צהוב
+                new Sphere(new Point(65, -5, -70), 10).setMaterial(targetMat).setEmission(new Color(180, 30, 180)), // מג'נטה
 
                 // --- 5 כדורי התצוגה הראשיים מקדימה (גופים 8 עד 12) ---
                 // מסודרים משמאל לימין ומראים את חוקי השיפור שלכן בהדרגה מושלמת
-                new Sphere(new Point(-45, -5, -15), 13).setMaterial(sharpMirror),   // 1. מראה חדה לחלוטין
-                new Sphere(new Point(-18, -5, -15), 13).setMaterial(glossyMirror),  // 2. מראה מטושטשת (Glossy)
-                new Sphere(new Point(10, -5, -15), 13).setMaterial(clearGlass),     // 3. זכוכית שקופה וצלולה
-                new Sphere(new Point(38, -5, -15), 13).setMaterial(midBlurGlass),   // 4. זכוכית חלבית (טשטוש בינוני)
-                new Sphere(new Point(65, -5, -15), 13).setMaterial(heavyBlurGlass)  // 5. זכוכית חלבית (טשטוש עמוק)
+                new Sphere(new Point(-45, -5, -15), 13).setMaterial(sharpMirror), // 1. מראה חדה לחלוטין
+                new Sphere(new Point(-18, -5, -15), 13).setMaterial(glossyMirror), // 2. מראה מטושטשת (Glossy)
+                new Sphere(new Point(10, -5, -15), 13).setMaterial(clearGlass), // 3. זכוכית שקופה וצלולה
+                new Sphere(new Point(38, -5, -15), 13).setMaterial(midBlurGlass), // 4. זכוכית חלבית (טשטוש בינוני)
+                new Sphere(new Point(65, -5, -15), 13).setMaterial(heavyBlurGlass) // 5. זכוכית חלבית (טשטוש עמוק)
         );
 
         // 4. Exactly 3 Light Sources (Directional, Point, and Spot)
@@ -74,6 +76,11 @@ public class TransparencyReflectionTests {
                 .setVpDistance(100)
                 .setVpSize(140, 87.5)
                 .setRayTracer(scene, RayTracerType.SIMPLE)
+
+                // --- הגדרות ריבוי תהליכונים והדפסה לפי השינויים במצלמה ---
+                .setMultithreading(enableBlur ? -1 : 0) // -1 להזרמה מקבילית בטשטוש, 0 לריצה רגילה
+                .setDebugPrint(10.0) // הדפסת אחוזי התקדמות בכל קפיצה של 10% לקונסול
+
                 .build()
                 .renderImage()
                 .writeToImage(fileName);
