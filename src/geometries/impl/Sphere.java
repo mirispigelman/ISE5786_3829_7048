@@ -1,5 +1,6 @@
 package geometries.impl;
 
+import geometries.api.BoundingBox;
 import java.util.List;
 import primitives.Point;
 import primitives.Ray;
@@ -83,5 +84,27 @@ public final class Sphere extends RadialGeometry {
         }
 
         return null;
+    }
+    @Override
+    public void getOrCreateBox() {
+        // If the bounding box is already calculated, do not recalculate
+        if (this.box != null) return;
+
+        // Extract center coordinates using dot product with axis vectors
+        primitives.Vector centerVec = _center.equals(primitives.Point.ZERO) ? null : _center.subtract(primitives.Point.ZERO);
+        double cx = centerVec == null ? 0 : centerVec.dotProduct(primitives.Vector.AXIS_X);
+        double cy = centerVec == null ? 0 : centerVec.dotProduct(primitives.Vector.AXIS_Y);
+        double cz = centerVec == null ? 0 : centerVec.dotProduct(primitives.Vector.AXIS_Z);
+
+        // Calculate box boundaries: center minus radius and center plus radius for each axis
+        double minX = cx - _radius;
+        double maxX = cx + _radius;
+        double minY = cy - _radius;
+        double maxY = cy + _radius;
+        double minZ = cz - _radius;
+        double maxZ = cz + _radius;
+
+        // Create the bounding box and save it in the protected field inherited from Intersectable
+        this.box = new BoundingBox(minX, maxX, minY, maxY, minZ, maxZ);
     }
 }

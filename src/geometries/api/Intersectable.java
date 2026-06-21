@@ -5,6 +5,8 @@ import primitives.Ray;
 import primitives.Vector;
 import primitives.Material;
 import lighting.LightSource;
+import geometries.api.BoundingBox; // <--- Clean import at the top of the file
+
 import java.util.List;
 import java.util.Objects;
 
@@ -26,7 +28,6 @@ public abstract class Intersectable {
         public final Point point;
         public final Material material;
 
-
         public Vector normal;
         public Vector v;
         public double vNormal;
@@ -36,8 +37,8 @@ public abstract class Intersectable {
 
         /**
          * Constructor for Intersection
-         * @param geometry the geometry [cite: 28]
-         * @param point the point [cite: 28]
+         * @param geometry the geometry
+         * @param point the point
          */
         public Intersection(Geometry geometry, Point point) {
             this.geometry = geometry;
@@ -66,7 +67,7 @@ public abstract class Intersectable {
 
     /**
      * Public NVI method to find intersections as points.
-     * This method is final and cannot be overridden[cite: 40].
+     * This method is final and cannot be overridden.
      * @param ray the ray
      * @return list of intersection points
      */
@@ -80,7 +81,7 @@ public abstract class Intersectable {
 
     /**
      * Public NVI method to find intersections with their geometries.
-     * This method is final and cannot be overridden[cite: 37].
+     * This method is final and cannot be overridden.
      * @param ray the ray
      * @return list of intersections
      */
@@ -95,4 +96,29 @@ public abstract class Intersectable {
      * @return list of intersections
      */
     protected abstract List<Intersection> calcIntersectionsHelper(Ray ray);
+
+    // --- BVH Acceleration Fields ---
+    protected BoundingBox box; // Clean usage thanks to the import above
+    protected boolean bvhEnabled = false;
+
+    /**
+     * Public getter to access the bounding box of this intersectable object.
+     * @return the bounding box of the geometry
+     */
+    public BoundingBox getBox() {
+        return this.box;
+    }
+
+    /**
+     * Method to enable or disable the BVH mechanism from the unit tests.
+     */
+    public Intersectable setBVH(boolean enable) {
+        this.bvhEnabled = enable;
+        return this;
+    }
+
+    /**
+     * Abstract method that every geometric body must implement to compute its own box.
+     */
+    public abstract void getOrCreateBox();
 }

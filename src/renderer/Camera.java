@@ -88,14 +88,24 @@ public class Camera implements Cloneable {
      * Renders the image by dynamically choosing the optimal threading strategy.
      * @return the camera object
      */
+    /**
+     * Renders the image by dynamically choosing the optimal threading strategy.
+     * Also triggers the BVH bounding boxes creation if geometries exist in the raytracer scene.
+     * @return the camera object
+     */
     public Camera renderImage() {
         if (imageWriter == null) throw new MissingResourceException("Missing image writer", "Camera", "imageWriter");
         if (rayTracer == null) throw new MissingResourceException("Missing ray tracer", "Camera", "rayTracer");
 
-        // אתחול מנהל הפיקסלים
+        // BVH Acceleration: Automatically trigger box generation once before the loop if scene geometries exist.
+        if (rayTracer._scene != null && rayTracer._scene.geometries != null) {
+            rayTracer._scene.geometries.getOrCreateBox();
+        }
+
+        // Initialize the pixel manager
         pixelManager = new PixelManager(nY, nX, printInterval);
 
-        // בחירת אסטרטגיית הריצה בהתאם לערך השדה threadsCount
+        // Choose the rendering strategy based on the threadsCount field
         return switch (threadsCount) {
             case 0 -> renderImageNoThreads();
             case -1 -> renderImageStream();
