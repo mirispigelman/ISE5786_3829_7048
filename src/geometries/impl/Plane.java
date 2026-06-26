@@ -97,4 +97,11 @@ public final class Plane extends Geometry {
         // return the intersection wrapped in an Intersection object with this plane
         return List.of(new Intersection(this, ray.getPoint(t)));
     }
+    @Override
+    public void getOrCreateBox() {
+        // A plane is infinite in size, so it does not have a finite bounding box.
+        // We leave this.box as null so the BVH optimization skips box filtering for planes.
+        this.box = null;
+    }
+
 }

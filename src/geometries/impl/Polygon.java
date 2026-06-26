@@ -126,4 +126,31 @@ public class Polygon extends Geometry {
         // Even though we used the plane for calculation, the geometry must be the polygon
         return List.of(new Intersection(this, planeIntersections.get(0)));
     }
+    @Override
+    public void getOrCreateBox() {
+        // If the bounding box is already calculated, do not recalculate
+        if (this.box != null) return;
+
+        double minX = Double.POSITIVE_INFINITY, maxX = Double.NEGATIVE_INFINITY;
+        double minY = Double.POSITIVE_INFINITY, maxY = Double.NEGATIVE_INFINITY;
+        double minZ = Double.POSITIVE_INFINITY, maxZ = Double.NEGATIVE_INFINITY;
+
+        // Iterate through all vertices of the polygon to find the absolute bounding bounds
+        for (primitives.Point p : this._vertices) {
+            primitives.Vector v = p.equals(primitives.Point.ZERO) ? null : p.subtract(primitives.Point.ZERO);
+            double px = v == null ? 0 : v.dotProduct(primitives.Vector.AXIS_X);
+            double py = v == null ? 0 : v.dotProduct(primitives.Vector.AXIS_Y);
+            double pz = v == null ? 0 : v.dotProduct(primitives.Vector.AXIS_Z);
+
+            if (px < minX) minX = px;
+            if (px > maxX) maxX = px;
+            if (py < minY) minY = py;
+            if (py > maxY) maxY = py;
+            if (pz < minZ) minZ = pz;
+            if (pz > maxZ) maxZ = pz;
+        }
+
+        // Create the bounding box and save it in the protected field
+        this.box = new geometries.api.BoundingBox(minX, maxX, minY, maxY, minZ, maxZ);
+    }
 }

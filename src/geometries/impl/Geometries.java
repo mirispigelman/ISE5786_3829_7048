@@ -59,7 +59,11 @@ public class Geometries extends Intersectable {
         List<Intersection> result = null;
 
         // Iterate through all geometries using a foreach loop (KIS principle)
+        // Iterate through all geometries using a foreach loop (KIS principle)
         for (Intersectable item : _geometries) {
+            // 🔥 השורה שצריך להוסיף: מחלחלת את מצב ה-BVH הנוכחי (אמת או שקר) לגופים הפנימיים
+            item.setBVH(this.bvhEnabled);
+
             // We MUST call the public calcIntersections method, not the helper
             var itemIntersections = item.calcIntersections(ray);
 

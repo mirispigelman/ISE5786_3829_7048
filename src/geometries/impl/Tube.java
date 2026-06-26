@@ -54,4 +54,10 @@ public class Tube extends RadialGeometry {
         // Currently not implemented, returning null as in the original code
         return null;
     }
+    @Override
+    public void getOrCreateBox() {
+        // A tube is infinite along its axis, so it cannot be enclosed in a finite bounding box.
+        // We leave this.box as null so the BVH optimization safely skips bounding box checks for tubes.
+        this.box = null;
+    }
 }

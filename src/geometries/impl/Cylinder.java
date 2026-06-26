@@ -33,4 +33,10 @@ public final class Cylinder extends Tube {
     public String toString() {
         return "Cylinder: height=" + _height + ", " + super.toString();
     }
+    @Override
+    public void getOrCreateBox() {
+        // A tube is infinite along its axis, so it cannot be enclosed in a finite bounding box.
+        // We leave this.box as null so the BVH optimization safely skips bounding box checks for tubes.
+        this.box = null;
+    }
 }

@@ -71,45 +71,5 @@ public final class Triangle extends Polygon {
 
         return null;
     }
-    @Override
-    public void getOrCreateBox() {
-        // If the bounding box is already calculated, do not recalculate
-        if (this.box != null) return;
 
-        // Extract coordinates for vertex 1
-        Point p1 = _vertices.get(0);
-        primitives.Vector v1 = p1.equals(primitives.Point.ZERO) ? null : p1.subtract(primitives.Point.ZERO);
-        double p1x = v1 == null ? 0 : v1.dotProduct(primitives.Vector.AXIS_X);
-        double p1y = v1 == null ? 0 : v1.dotProduct(primitives.Vector.AXIS_Y);
-        double p1z = v1 == null ? 0 : v1.dotProduct(primitives.Vector.AXIS_Z);
-
-        // Extract coordinates for vertex 2
-        Point p2 = _vertices.get(1);
-        primitives.Vector v2 = p2.equals(primitives.Point.ZERO) ? null : p2.subtract(primitives.Point.ZERO);
-        double p2x = v2 == null ? 0 : v2.dotProduct(primitives.Vector.AXIS_X);
-        double p2y = v2 == null ? 0 : v2.dotProduct(primitives.Vector.AXIS_Y);
-        double p2z = v2 == null ? 0 : v2.dotProduct(primitives.Vector.AXIS_Z);
-
-        // Extract coordinates for vertex 3
-        Point p3 = _vertices.get(2);
-        primitives.Vector v3 = p3.equals(primitives.Point.ZERO) ? null : p3.subtract(primitives.Point.ZERO);
-        double p3x = v3 == null ? 0 : v3.dotProduct(primitives.Vector.AXIS_X);
-        double p3y = v3 == null ? 0 : v3.dotProduct(primitives.Vector.AXIS_Y);
-        double p3z = v3 == null ? 0 : v3.dotProduct(primitives.Vector.AXIS_Z);
-
-        // Find min and max values for the X axis
-        double minX = Math.min(p1x, Math.min(p2x, p3x));
-        double maxX = Math.max(p1x, Math.max(p2x, p3x));
-
-        // Find min and max values for the Y axis
-        double minY = Math.min(p1y, Math.min(p2y, p3y));
-        double maxY = Math.max(p1y, Math.max(p2y, p3y));
-
-        // Find min and max values for the Z axis
-        double minZ = Math.min(p1z, Math.min(p2z, p3z));
-        double maxZ = Math.max(p1z, Math.max(p2z, p3z));
-
-        // Create the bounding box and save it in the protected field inherited from Intersectable
-        this.box = new BoundingBox(minX, maxX, minY, maxY, minZ, maxZ);
-    }
 }
